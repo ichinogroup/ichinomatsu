@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>旅館一の松 — Guest Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --ink:       #1a1612;
+      --sand:      #f5f0e8;
+      --cream:     #faf7f2;
+      --warm:      #e8dfd0;
+      --rust:      #8b4a2f;
+      --gold:      #b8965a;
+      --muted:     #7a6e62;
+      --border:    rgba(139,74,47,0.18);
+      --card-bg:   rgba(255,253,248,0.96);
+      --shadow:    0 2px 24px rgba(26,22,18,0.07);
+    }
+
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 15px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(184,150,90,0.10) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23b8965a' opacity='0.18'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.72) saturate(0.85);
+      display: block;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(26,22,18,0.1) 0%, rgba(26,22,18,0.55) 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      padding-bottom: 28px;
+    }
+    .hero-kana {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.85rem;
+      letter-spacing: 0.12em;
+      color: #fff;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .hero-title span {
+      font-style: italic;
+      font-weight: 400;
+      color: #e8c98a;
+    }
+
+    /* ── NAV STRIP ── */
+    .topnav {
+      background: var(--ink);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+    .topnav a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 11px 18px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s, background 0.2s;
+    }
+    .topnav a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
+    .topnav a:hover { color: #e8c98a; background: rgba(255,255,255,0.04); }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── SECTION CARD ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.10s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.20s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.30s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card header */
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--sand);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-icon svg { width: 18px; height: 18px; stroke: var(--rust); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .card-label {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--rust);
+      letter-spacing: 0.04em;
+    }
+
+    /* Card body */
+    .card-body { padding: 10px 0; }
+
+    /* List links */
+    .link-list { list-style: none; }
+    .link-list li a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--ink);
+      border-bottom: 1px solid rgba(232,223,208,0.5);
+      transition: background 0.18s, color 0.18s, padding-left 0.18s;
+    }
+    .link-list li:last-child a { border-bottom: none; }
+    .link-list li a:hover {
+      background: var(--sand);
+      color: var(--rust);
+      padding-left: 24px;
+    }
+    .link-list li a::after {
+      content: '';
+      width: 14px; height: 14px; flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b8965a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.6;
+    }
+
+    /* Info text (no link) */
+    .info-text {
+      padding: 14px 20px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.75;
+      border-bottom: 1px solid rgba(232,223,208,0.5);
+    }
+    .info-text:last-child { border-bottom: none; }
+
+    /* Wi-Fi credential block */
+    .wifi-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 20px;
+    }
+    .wifi-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--sand);
+      border-radius: 3px;
+      padding: 10px 14px;
+    }
+    .wifi-tag {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      min-width: 44px;
+    }
+    .wifi-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      flex: 1;
+    }
+    .wifi-copy {
+      background: none; border: none; cursor: pointer;
+      padding: 4px; color: var(--gold);
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .wifi-copy:hover { color: var(--rust); }
+
+    /* Big link tile */
+    .tile-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .tile-link:last-child { border-bottom: none; }
+    .tile-link:hover { background: var(--sand); color: var(--rust); }
+    .tile-link-label {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.0rem;
+      letter-spacing: 0.03em;
+    }
+    .tile-arrow {
+      width: 22px; height: 22px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tile-arrow svg { width: 10px; height: 10px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* About / amenity prose */
+    .prose {
+      padding: 14px 20px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .prose h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.0rem;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .prose .sub-link {
+      display: block;
+      margin-top: 12px;
+      color: var(--rust);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Quick-links row */
+    .quick-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 20px;
+    }
+    .ql {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .ql:hover { border-color: var(--rust); color: var(--rust); background: rgba(139,74,47,0.04); }
+
+    /* Divider rule */
+    .rule {
+      display: flex; align-items: center; gap: 10px;
+      padding: 4px 0;
+    }
+    .rule::before, .rule::after {
+      content: ''; flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+    .rule span {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 20px 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-links a:hover { color: var(--rust); border-color: var(--rust); }
+    .copyright {
+      font-size: 0.68rem;
+      color: rgba(122,110,98,0.6);
+      letter-spacing: 0.08em;
+    }
+    .mon { display: inline-block; margin: 0 6px; color: var(--gold); }
+
+    /* Toast */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--ink); color: var(--gold);
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      padding: 10px 20px; border-radius: 30px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0; pointer-events: none; z-index: 999;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* Mobile refinements */
+    @media (max-width: 400px) {
+      .hero { height: 210px; }
+      .hero-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- Replace src with your own ryokan photo -->
+  <img class="hero-img"
+       src="ryokan-photo.png"
+       alt="Ryokan Takayama" />
+  <div class="hero-overlay">
+    <img src="ichinomatsu-logo.png" alt="Logo" style="height:48px; object-fit:contain;" />
+    <h1 class="hero-title">旅館　一の松へ<br><span>ようこそ</span></h1>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="/">HOME</a>
+  <a href="#" onclick="return false">Important Info</a>
+  <a href="https://www.google.com/maps" target="_blank">Map</a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- 1. ROOM MANUAL -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <span class="card-label">Room Manual</span>
+    </div>
+    <div class="card-body">
+      <ul class="link-list">
+        <li><a href="#">Floor Layout / 間取り</a></li>
+        <li><a href="#">Air Conditioner / エアコン</a></li>
+        <li><a href="#">Portable Heater / 暖房器</a></li>
+        <li><a href="#">Humidifier / 加湿器</a></li>
+        <li><a href="#">Television / テレビ</a></li>
+        <li><a href="#">Iron / アイロン</a></li>
+        <li><a href="#">Washing Machine & Dryer / 洗濯乾燥機</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Floor Map tile -->
+  <a href="#" class="card" style="display:block;">
+    <div class="tile-link">
+      <span class="tile-link-label">Floor Map</span>
+      <div class="tile-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- 2. WI-FI -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <span class="card-label">Wi-Fi</span>
+    </div>
+    <div class="card-body">
+      <div class="wifi-block">
+        <div class="wifi-row">
+          <span class="wifi-tag">SSID</span>
+          <span class="wifi-val" id="ssid">YOUR_NETWORK_NAME</span>
+          <button class="wifi-copy" onclick="copyText('ssid')">Copy</button>
+        </div>
+        <div class="wifi-row">
+          <span class="wifi-tag">Pass</span>
+          <span class="wifi-val" id="pass">YOUR_PASSWORD</span>
+          <button class="wifi-copy" onclick="copyText('pass')">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick tiles: Drink & Parking -->
+  <div class="card">
+    <a href="#" class="tile-link">
+      <span class="tile-link-label">Drink Menu</span>
+      <div class="tile-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+    <a href="#" class="tile-link">
+      <span class="tile-link-label">Parking Information</span>
+      <div class="tile-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>
+  </div>
+
+  <!-- 3. ABOUT -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <span class="card-label">About</span>
+    </div>
+    <div class="card-body">
+      <div class="prose">
+        <h3>Supporting Local Businesses & Eco Initiatives</h3>
+        Our ryokan is proud to work with local artisans, farms, and businesses throughout Hida-Takayama. Every detail of your stay connects you to the living culture of this historic town.
+        <a class="sub-link" href="#" target="_blank">Learn More About Your Stay →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. AMENITY -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
+      <span class="card-label">Amenities</span>
+    </div>
+    <div class="card-body">
+      <div class="info-text">
+        To protect Takayama's beautiful nature, we have reduced disposable bathroom items.<br><br>
+        Provided: <strong>Bamboo toothbrush</strong>, toothpaste &amp; reusable body towel.<br><br>
+        Available upon request from our staff:<br>
+        · Hairbrush &nbsp;· Razor &nbsp;· Cotton Set
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. WEATHER & SNS -->
+  <div class="card">
+    <div class="card-body">
+      <div class="quick-links">
+        <a href="#" class="ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg>
+          Weather Forecast
+        </a>
+        <a href="#" class="ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Follow us on SNS
+        </a>
+        <a href="#" class="ql">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+          Local Recommendations
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#" target="_blank">Website</a>
+    <a href="#" target="_blank">Contact Us</a>
+    <a href="#" target="_blank">Leave a Review</a>
+  </div>
+  <p class="copyright">
+    Copyright © <span class="mon">御</span>  ICHINOMATSU JAPANESE MODERN HOTEL — All Rights Reserved
+  </p>
+</footer>
+
+<!-- TOAST -->
+<div id="toast">Copied to clipboard ✓</div>
+
+<script>
+  function copyText(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    });
+  }
+</script>
+
+</body>
+</html>
