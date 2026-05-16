@@ -73,17 +73,17 @@
       margin-bottom: 6px;
     }
     .hero-sub {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.4em;
-  color: rgba(255,255,255,0.6);
-  margin-top: 6px;
-  text-transform: uppercase;
-}
-.hero-title {
-  font-size: 2.2rem;
-  letter-spacing: 0.18em;
-}
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+      letter-spacing: 0.18em;
+    }
     .hero-title span {
       font-style: italic;
       font-weight: 400;
@@ -379,6 +379,61 @@
     }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+    /* ==================== WEATHER MODAL ==================== */
+    .weather-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(26,22,18,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 420px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      background: var(--rust);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .close-btn {
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    .close-btn:hover {
+      opacity: 1;
+    }
+
+    .modal-body {
+      padding: 20px;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
     /* Mobile refinements */
     @media (max-width: 400px) {
       .hero { height: 210px; }
@@ -390,14 +445,11 @@
 
 <!-- HERO -->
 <div class="hero">
-  <!-- Replace src with your own ryokan photo -->
-  <img class="hero-img"
-       src="ichinomatsu-photo.png"
-       alt="Ryokan Takayama" />
+  <img class="hero-img" src="ichinomatsu-photo.png" alt="Ryokan Takayama" />
   <div class="hero-overlay">
     <img src="ichinomatsu-logo.svg" alt="Logo" style="height:100px; object-fit:contain;" />
-   <h1 class="hero-title"><span>旅館一の松</span></h1>
-<p class="hero-sub">Ichinomatsu Japanese Modern Hotel</p>
+    <h1 class="hero-title"><span>旅館一の松</span></h1>
+    <p class="hero-sub">Ichinomatsu Japanese Modern Hotel</p>
   </div>
 </div>
 
@@ -501,7 +553,7 @@
   <div class="card">
     <div class="card-body">
       <div class="quick-links">
-        <a href="#" class="ql">
+        <a href="#" id="weather-trigger" class="ql">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg>
           Weather Forecast
         </a>
@@ -534,6 +586,25 @@
 <!-- TOAST -->
 <div id="toast">Copied to clipboard ✓</div>
 
+<!-- ==================== WEATHER MODAL ==================== -->
+<div id="weather-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Thời tiết Takayama</h3>
+      <span id="close-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body">
+      <a class="weatherwidget-io" 
+         href="https://forecast7.com/en/36d15137d25/takayama/" 
+         data-label_1="TAKAYAMA" 
+         data-label_2="WEATHER" 
+         data-theme="original">
+         TAKAYAMA WEATHER
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
   function copyText(id) {
     const el = document.getElementById(id);
@@ -544,6 +615,32 @@
       setTimeout(() => t.classList.remove('show'), 2200);
     });
   }
+
+  // Weather Widget + Modal Script
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const trigger = document.getElementById('weather-trigger');
+    const modal = document.getElementById('weather-modal');
+    const closeBtn = document.getElementById('close-modal');
+
+    if (trigger && modal && closeBtn) {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+      });
+
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+  });
 </script>
 
 </body>
