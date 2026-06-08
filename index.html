@@ -477,7 +477,7 @@
         <li><a href="Air-Conditioner-Remote-Control-User-Guide.pdf">Air Conditioner / エアコン</a></li>
         <li><a href="reducing-noise.pdf">Reducing Noise / 騒音のご案内</a></li>
         <li><a href="#">Television / テレビ</a></li>
-        <li><a href="#">Washing Machine & Dryer / 洗濯乾燥機</a></li>
+        <li><a href="#" id="washer-trigger">Washing Machine & Dryer / 洗濯乾燥機</a></li>
       </ul>
     </div>
   </div>
@@ -603,6 +603,35 @@
       </a>
     </div>
   </div>
+  
+<!-- ==================== WASHER MODAL ==================== -->
+<div id="washer-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Washing Machine & Dryer / 洗濯乾燥機</h3>
+      <span id="close-washer-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body" style="font-size:0.9rem; line-height:1.85; color:var(--ink);">
+      <p style="margin-bottom:14px;">
+        Located on the <strong>1st floor of the Annex (別館)</strong>, beside the main entrance.<br>
+        <span style="color:var(--muted); font-size:0.84rem;">別館1階、入口横にございます。</span>
+      </p>
+      <p style="margin-bottom:6px;">
+        🧺 <strong>Washing Machine / 洗濯機</strong> — ¥300 per cycle / 1回300円
+      </p>
+      <p style="margin-bottom:14px;">
+        💨 <strong>Dryer / 乾燥機</strong> — ¥100 per 10 min / 10分100円
+      </p>
+      <p style="margin-bottom:14px;">
+        Both machines are coin-operated. Operating instructions with QR codes are posted on each coin panel.<br>
+        <span style="color:var(--muted); font-size:0.84rem;">コイン式です。各投入口に使い方のQRコードが貼ってあります。</span>
+      </p>
+      <p style="padding:12px 14px; background:var(--sand); border-radius:4px; font-size:0.84rem; color:var(--muted);">
+        ⚠️ Please refrain from use between <strong>10:00 PM – 7:00 AM</strong> out of consideration for neighbors and fellow guests.<br>
+        近隣および他のお客様へのご配慮のため、<strong>夜10時〜朝7時</strong>のご利用はご遠慮ください。
+      </p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -638,6 +667,23 @@
         if (e.target === modal) {
           modal.style.display = 'none';
         }
+       const washerTrigger = document.getElementById('washer-trigger');
+    const washerModal = document.getElementById('washer-modal');
+    const closeWasherBtn = document.getElementById('close-washer-modal');
+    if (washerTrigger && washerModal && closeWasherBtn) {
+      washerTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        washerModal.style.display = 'flex';
+      });
+      closeWasherBtn.addEventListener('click', function() {
+        washerModal.style.display = 'none';
+      });
+      washerModal.addEventListener('click', function(e) {
+        if (e.target === washerModal) {
+          washerModal.style.display = 'none';
+        }
+      });
+    } 
       });
     }
   });
