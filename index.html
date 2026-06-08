@@ -667,7 +667,8 @@
         if (e.target === modal) {
           modal.style.display = 'none';
         }
-       const washerTrigger = document.getElementById('washer-trigger');
+        
+    const washerTrigger = document.getElementById('washer-trigger');
     const washerModal = document.getElementById('washer-modal');
     const closeWasherBtn = document.getElementById('close-washer-modal');
     if (washerTrigger && washerModal && closeWasherBtn) {
@@ -681,11 +682,8 @@
       washerModal.addEventListener('click', function(e) {
         if (e.target === washerModal) {
           washerModal.style.display = 'none';
-        }
       });
-    } 
-      });
-    }
+    }      
   });
 </script>
 
