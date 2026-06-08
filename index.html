@@ -603,7 +603,8 @@
       </a>
     </div>
   </div>
-  
+</div>
+
 <!-- ==================== WASHER MODAL ==================== -->
 <div id="washer-modal" class="weather-modal">
   <div class="modal-content">
@@ -645,29 +646,25 @@
     });
   }
 
-  // Weather Widget + Modal Script
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
 
   document.addEventListener('DOMContentLoaded', function() {
     const trigger = document.getElementById('weather-trigger');
     const modal = document.getElementById('weather-modal');
     const closeBtn = document.getElementById('close-modal');
-
     if (trigger && modal && closeBtn) {
       trigger.addEventListener('click', function(e) {
         e.preventDefault();
         modal.style.display = 'flex';
       });
-
       closeBtn.addEventListener('click', function() {
         modal.style.display = 'none';
       });
-
       modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          modal.style.display = 'none';
-        }
-        
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    }
+
     const washerTrigger = document.getElementById('washer-trigger');
     const washerModal = document.getElementById('washer-modal');
     const closeWasherBtn = document.getElementById('close-washer-modal');
@@ -680,12 +677,10 @@
         washerModal.style.display = 'none';
       });
       washerModal.addEventListener('click', function(e) {
-        if (e.target === washerModal) {
-          washerModal.style.display = 'none';
+        if (e.target === washerModal) washerModal.style.display = 'none';
       });
-    }      
+    }
   });
 </script>
-
 </body>
 </html>
