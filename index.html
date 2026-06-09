@@ -529,6 +529,7 @@
         <li><a href="#"id="paid-trigger">Paid Services / 有料サービス</a></li>
         <li><a href="room_cleaning_guide.pdf">Housekeeping for Long-Stay Guests / 連泊のお客様の清掃について</a></li>
         <li><a href="#"id="taxi-trigger">Need a Taxi? / タクシーのご手配</a></li>
+        <li><a href="#" id="checkout-trigger">Late Check-out / レイトチェックアウト</a></li>
       </ul>
     </div>
   </div>
@@ -717,6 +718,32 @@
   </div>
 </div>
 
+<!-- ==================== LATE CHECK-OUT MODAL ==================== -->
+<div id="checkout-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Late Check-out / レイトチェックアウト</h3>
+      <span id="close-checkout-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body" style="font-size:0.9rem; line-height:1.85; color:var(--ink);">
+      <p style="margin-bottom:16px;">
+        Standard check-out time is <strong>10:00 AM</strong>.<br>
+        <span style="color:var(--muted); font-size:0.84rem;">通常のチェックアウトは<strong>午前10時</strong>となっております。</span>
+      </p>
+      <p style="margin-bottom:6px;">🕐 <strong>After 10:15 AM</strong> — ¥1,000 per hour<br>
+        <span style="color:var(--muted); font-size:0.84rem;">10時15分以降 — 1時間ごとに¥1,000</span>
+      </p>
+      <p style="margin-bottom:16px;">🕑 <strong>After 2:00 PM</strong> — Additional full night charge<br>
+        <span style="color:var(--muted); font-size:0.84rem;">午後2時以降 — 追加で1泊分の料金が発生いたします</span>
+      </p>
+      <p style="padding:12px 14px; background:var(--sand); border-radius:4px; font-size:0.84rem; color:var(--muted);">
+        To request late check-out, please notify the front desk <strong>before 10:00 AM</strong> on the day of departure.<br>
+        レイトチェックアウトをご希望の場合は、当日の<strong>午前10時まで</strong>にフロントへお申し付けください。
+      </p>
+    </div>
+  </div>
+</div>  
+
 <script>
   function copyText(id) {
     const el = document.getElementById(id);
@@ -788,6 +815,15 @@
       taxiTrigger.addEventListener('click', function(e) { e.preventDefault(); taxiModal.style.display = 'flex'; });
       closeTaxiBtn.addEventListener('click', function() { taxiModal.style.display = 'none'; });
       taxiModal.addEventListener('click', function(e) { if (e.target === taxiModal) taxiModal.style.display = 'none'; });
+    }
+
+    const checkoutTrigger = document.getElementById('checkout-trigger');
+    const checkoutModal = document.getElementById('checkout-modal');
+    const closeCheckoutBtn = document.getElementById('close-checkout-modal');
+    if (checkoutTrigger && checkoutModal && closeCheckoutBtn) {
+      checkoutTrigger.addEventListener('click', function(e) { e.preventDefault(); checkoutModal.style.display = 'flex'; });
+      closeCheckoutBtn.addEventListener('click', function() { checkoutModal.style.display = 'none'; });
+      checkoutModal.addEventListener('click', function(e) { if (e.target === checkoutModal) checkoutModal.style.display = 'none'; });
     }
   });
 </script>
