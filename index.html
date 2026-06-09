@@ -524,11 +524,11 @@
     </div>
     <div class="card-body">
       <ul class="link-list">
-        <li><a href="#">Free Lending Items / 無料貸出品</a></li>
+        <li><a href="#"　id="lending-trigger">Free Lending Items / 無料貸出品</a></li>
         <li><a href="#">For Guests with Children / お子様連れのお客様へ</a></li>
-        <li><a href="#">Paid Services / 有料サービス</a></li>
+        <li><a href="#"　id="paid-trigger">Paid Services / 有料サービス</a></li>
         <li><a href="#">Housekeeping for Long-Stay Guests / 連泊のお客様の清掃について</a></li>
-        <li><a href="#">Need a Taxi? / タクシーのご手配</a></li>
+        <li><a href="#"　id="taxi-trigger">Need a Taxi? / タクシーのご手配</a></li>
       </ul>
     </div>
   </div>
@@ -642,6 +642,81 @@
   </div>
 </div>
 
+  <!-- ==================== LENDING MODAL ==================== -->
+<div id="lending-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Free Lending Items / 無料貸出品</h3>
+      <span id="close-lending-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body" style="font-size:0.9rem; line-height:1.85; color:var(--ink);">
+      <p style="margin-bottom:16px;">
+        The following items are available on a complimentary loan basis. Please ask at the front desk.<br>
+        <span style="color:var(--muted); font-size:0.84rem;">下記のアイテムを無料でお貸し出しいたします。フロントまでお声がけください。</span>
+      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Nail Clippers<br><span style="color:var(--muted); font-size:0.8rem;">爪切り</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Thermometer<br><span style="color:var(--muted); font-size:0.8rem;">体温計</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Adapter<br><span style="color:var(--muted); font-size:0.8rem;">アダプター</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Iron<br><span style="color:var(--muted); font-size:0.8rem;">アイロン</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Sewing Set<br><span style="color:var(--muted); font-size:0.8rem;">裁縫セット</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Extra Pillow<br><span style="color:var(--muted); font-size:0.8rem;">枕</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Extra Towel<br><span style="color:var(--muted); font-size:0.8rem;">タオル</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Band-Aid<br><span style="color:var(--muted); font-size:0.8rem;">絆創膏</span></div>
+        <div style="background:var(--sand); padding:10px 14px; border-radius:4px;">Razor<br><span style="color:var(--muted); font-size:0.8rem;">カミソリ</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAID SERVICES MODAL ==================== -->
+<div id="paid-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Paid Services / 有料サービス</h3>
+      <span id="close-paid-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body" style="font-size:0.9rem; line-height:1.85; color:var(--ink);">
+      <p style="margin-bottom:6px;"><strong>Luggage Delivery / 宅配サービス</strong></p>
+      <p style="margin-bottom:16px;">
+        Luggage delivery is available. Please bring your items to the front desk and our staff will assist you with the details.<br>
+        <span style="color:var(--muted); font-size:0.84rem;">お荷物の宅配サービスをご利用いただけます。フロントまでお荷物をお持ちいただくと、詳しくご案内いたします。</span>
+      </p>
+      <p style="margin-bottom:6px;"><strong>Parking / 駐車場</strong></p>
+      <p style="padding:12px 14px; background:var(--sand); border-radius:4px; font-size:0.84rem; color:var(--muted);">
+        ¥1,000 per car, per night / 1泊1台 ¥1,000
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAXI MODAL ==================== -->
+<div id="taxi-modal" class="weather-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Need a Taxi? / タクシーのご手配</h3>
+      <span id="close-taxi-modal" class="close-btn">✕</span>
+    </div>
+    <div class="modal-body" style="font-size:0.9rem; line-height:1.85; color:var(--ink);">
+      <p style="margin-bottom:16px; padding:12px 14px; background:var(--sand); border-radius:4px; font-size:0.84rem; color:var(--muted);">
+        Our front desk is happy to arrange a taxi for you. Please visit us before your departure time.<br>
+        フロントでも車両の手配いたします。出発時間までにフロントにお越しください。
+      </p>
+      <p style="margin-bottom:12px; font-size:0.8rem; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase;">Or contact directly / 直接ご連絡の場合</p>
+      <div style="margin-bottom:12px; padding:12px 14px; border:1px solid var(--border); border-radius:4px;">
+        <p style="font-weight:500; margin-bottom:4px;">山都タクシー（株）</p>
+        <p><a href="tel:0577322323" style="color:var(--rust);">0577-32-2323</a></p>
+        <p><a href="http://santotaxi.com/" target="_blank" style="color:var(--muted); font-size:0.82rem;">santotaxi.com</a></p>
+      </div>
+      <div style="padding:12px 14px; border:1px solid var(--border); border-radius:4px;">
+        <p style="font-weight:500; margin-bottom:4px;">鳩タクシー株式会社</p>
+        <p><a href="tel:0577320246" style="color:var(--rust);">0577-32-0246</a></p>
+        <p><a href="http://www.hato-taxi.jp" target="_blank" style="color:var(--muted); font-size:0.82rem;">hato-taxi.jp</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   function copyText(id) {
     const el = document.getElementById(id);
@@ -686,6 +761,33 @@
       washerModal.addEventListener('click', function(e) {
         if (e.target === washerModal) washerModal.style.display = 'none';
       });
+    }
+
+    const lendingTrigger = document.getElementById('lending-trigger');
+    const lendingModal = document.getElementById('lending-modal');
+    const closeLendingBtn = document.getElementById('close-lending-modal');
+    if (lendingTrigger && lendingModal && closeLendingBtn) {
+      lendingTrigger.addEventListener('click', function(e) { e.preventDefault(); lendingModal.style.display = 'flex'; });
+      closeLendingBtn.addEventListener('click', function() { lendingModal.style.display = 'none'; });
+      lendingModal.addEventListener('click', function(e) { if (e.target === lendingModal) lendingModal.style.display = 'none'; });
+    }
+
+    const paidTrigger = document.getElementById('paid-trigger');
+    const paidModal = document.getElementById('paid-modal');
+    const closePaidBtn = document.getElementById('close-paid-modal');
+    if (paidTrigger && paidModal && closePaidBtn) {
+      paidTrigger.addEventListener('click', function(e) { e.preventDefault(); paidModal.style.display = 'flex'; });
+      closePaidBtn.addEventListener('click', function() { paidModal.style.display = 'none'; });
+      paidModal.addEventListener('click', function(e) { if (e.target === paidModal) paidModal.style.display = 'none'; });
+    }
+
+    const taxiTrigger = document.getElementById('taxi-trigger');
+    const taxiModal = document.getElementById('taxi-modal');
+    const closeTaxiBtn = document.getElementById('close-taxi-modal');
+    if (taxiTrigger && taxiModal && closeTaxiBtn) {
+      taxiTrigger.addEventListener('click', function(e) { e.preventDefault(); taxiModal.style.display = 'flex'; });
+      closeTaxiBtn.addEventListener('click', function() { taxiModal.style.display = 'none'; });
+      taxiModal.addEventListener('click', function(e) { if (e.target === taxiModal) taxiModal.style.display = 'none'; });
     }
   });
 </script>
