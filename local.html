@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <title>Local Guide — 旅館一の松</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:     #1a1612;
+      --sand:    #f5f0e8;
+      --cream:   #faf7f2;
+      --rust:    #8b4a2f;
+      --gold:    #b8965a;
+      --muted:   #7a6e62;
+      --border:  rgba(139,74,47,0.18);
+      --card-bg: rgba(255,253,248,0.97);
+      --shadow:  0 2px 20px rgba(26,22,18,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; scroll-behavior: smooth; }
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── BACK BAR ── */
+    .back-bar {
+      background: var(--ink);
+      padding: 10px 20px;
+    }
+    .back-bar a {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 0.2s;
+    }
+    .back-bar a:hover { color: #e8c98a; }
+
+    /* ── HERO ── */
+    .guide-hero {
+      background: linear-gradient(140deg, #1a1612 0%, #2d1f14 55%, #3a2010 100%);
+      padding: 52px 20px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .guide-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='0.7' fill='%23b8965a' opacity='0.14'/%3E%3C/svg%3E");
+    }
+    .guide-hero-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.44em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .guide-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .guide-hero h1 em { font-style: italic; color: #e8c98a; }
+    .guide-hero-sub {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    /* ── STICKY NAV ── */
+    .section-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,247,242,0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+    .section-nav-inner {
+      display: flex;
+      padding: 0 8px;
+      min-width: max-content;
+    }
+    .section-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 12px 13px;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-nav a:hover,
+    .section-nav a.active { color: var(--rust); border-bottom-color: var(--rust); }
+
+    /* ── MAIN ── */
+    .guide-main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 36px 14px 64px;
+    }
+
+    /* ── SECTION ── */
+    .section-block { margin-bottom: 52px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-icon { font-size: 1.3rem; line-height: 1; }
+    .section-title {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--rust);
+      letter-spacing: 0.04em;
+    }
+    .section-title-jp {
+      margin-left: auto;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    /* ── PLACE GRID ── */
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 11px;
+    }
+    @media (min-width: 560px) {
+      .place-grid.three { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── PLACE CARD ── */
+    .place-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .place-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(26,22,18,0.11);
+    }
+    .place-thumb {
+      height: 90px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .place-info {
+      padding: 11px 13px 13px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .place-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+    .badge {
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .b-must    { background:#8b4a2f1a; color:#8b4a2f; }
+    .b-local   { background:#b8965a1a; color:#9a7a3a; }
+    .b-family  { background:#4a7a501a; color:#3a6640; }
+    .b-budget  { background:#4a6a8a1a; color:#3a5570; }
+    .b-beef    { background:#7a1a1a1a; color:#7a2020; }
+    .b-onsen   { background:#1a7a701a; color:#1a6660; }
+    .b-winter  { background:#2a4a8a1a; color:#1e3d7a; }
+    .b-nature  { background:#3a6a1a1a; color:#3a5a18; }
+    .b-culture { background:#5a2a8a1a; color:#4a2070; }
+    .b-unesco  { background:#b8965a22; color:#8a6a30; border:1px solid #b8965a44; }
+    .b-spa     { background:#2a6a7a1a; color:#1e5a66; }
+    .b-ramen   { background:#8a5a201a; color:#7a4a18; }
+
+    .place-name {
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .place-name-jp {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: -2px;
+    }
+    .place-desc {
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 7px;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--rust);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 10px;
+      align-self: flex-start;
+      transition: all 0.18s;
+    }
+    .map-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
+    .map-btn svg { width: 9px; height: 9px; }
+
+    /* ── SHOP ROW ── */
+    .shop-grid { display: flex; flex-direction: column; gap: 9px; }
+    .shop-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: background 0.18s;
+    }
+    .shop-card:hover { background: var(--sand); }
+    .shop-left { display: flex; align-items: center; gap: 12px; }
+    .shop-icon {
+      width: 38px; height: 38px;
+      background: var(--sand);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .shop-name { font-size: 0.88rem; font-weight: 400; }
+    .shop-sub  { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    .guide-footer {
+      text-align: center;
+      padding: 22px 20px 40px;
+      border-top: 1px solid var(--border);
+    }
+    .guide-footer a {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .guide-footer a:hover { color: var(--rust); }
+
+    @media (max-width: 340px) {
+      .place-grid, .place-grid.three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BACK BAR -->
+<div class="back-bar">
+  <a href="index.html">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to Guest Manual
+  </a>
+</div>
+
+<!-- HERO -->
+<div class="guide-hero">
+  <p class="guide-hero-label">Ichinomatsu Recommends</p>
+  <h1>Takayama <em>Local Guide</em></h1>
+  <p class="guide-hero-sub">高山おすすめスポット</p>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="section-nav">
+  <div class="section-nav-inner">
+    <a href="#restaurants">🍜 Dining</a>
+    <a href="#attractions">🏯 Attractions</a>
+    <a href="#onsen">♨️ Onsen</a>
+    <a href="#ski">⛷️ Ski</a>
+    <a href="#relax">💆 Relax</a>
+    <a href="#shops">🛒 Shops</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="guide-main">
+
+  <!-- ══ RESTAURANTS ══ -->
+  <section id="restaurants" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">🍜</span>
+      <span class="section-title">Dining</span>
+      <span class="section-title-jp">レストラン・飲食店</span>
+    </div>
+    <div class="place-grid three">
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e8d5b5;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Mitarashi_dango_Gifu.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Maruiya dango" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5e8d0,#e8d0a8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Maruiya</p>
+          <p class="place-name-jp">まるや本店</p>
+          <p class="place-desc">Iconic Takayama institution famous for mitarashi dango and traditional Hida miso. A must on any visit.<br><span style="color:var(--muted);font-size:0.73rem;">高山を代表する老舗。みたらし団子と飛騨みそが絶品で、地元住民にも観光客にも長年愛されています。</span></p>
+          <a href="https://www.google.com/maps/search/まるや本店+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0c4a0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Japanese_traditional_food_in_Takayama_(1)..jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida beef" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5bc,#e0b898)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-beef">Hida Beef</span><span class="badge b-must">Must Visit</span></div>
+          <p class="place-name">Suzuya</p>
+          <p class="place-name-jp">すゞや</p>
+          <p class="place-desc">Beloved local restaurant renowned for premium Hida beef and traditional Takayama cuisine in a warm, welcoming setting.<br><span style="color:var(--muted);font-size:0.73rem;">飛騨牛料理と郷土料理が楽しめる人気店。アットホームな雰囲気で、本場の飛騨の味をご堪能ください。</span></p>
+          <a href="https://www.google.com/maps/search/すゞや+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Imahan_Sukiyaki_Asakusa.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wagyu sukiyaki" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d0b5,#e0b090)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-beef">Hida Beef</span></div>
+          <p class="place-name">Ajikura Tengoku</p>
+          <p class="place-name-jp">味蔵天国</p>
+          <p class="place-desc">Specializes in premium Hida Wagyu, with sukiyaki and shabu-shabu made from beautifully marbled local beef.<br><span style="color:var(--muted);font-size:0.73rem;">最高品質の飛騨和牛を使ったすき焼き・しゃぶしゃぶが自慢。贅沢な霜降り肉をご堪能ください。</span></p>
+          <a href="https://www.google.com/maps/search/味蔵天国+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d8e8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Gyutan_teishoku.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Japanese set meal" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8f0d5,#d0e0b0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Sanshian Hosho</p>
+          <p class="place-name-jp">三心庵豊昇</p>
+          <p class="place-desc">Popular for beautifully composed Japanese set meals using seasonal local ingredients. A genuine favorite among Takayama residents.<br><span style="color:var(--muted);font-size:0.73rem;">旬の地元食材を使った和定食が評判。地元の方々に長く愛される一軒です。</span></p>
+          <a href="https://www.google.com/maps/search/三心庵豊昇+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d4c8e8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Steak_frites.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Steak" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0f0,#d4c8e8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-beef">Hida Beef</span><span class="badge b-local">French</span></div>
+          <p class="place-name">Le Midi</p>
+          <p class="place-name-jp">ル・ミディ</p>
+          <p class="place-desc">French restaurant specializing in Hida beef hamburger steak and premium cuts. A refined Western dining experience in the heart of Takayama.<br><span style="color:var(--muted);font-size:0.73rem;">飛騨牛のハンバーグステーキや本格ステーキが楽しめるフレンチレストラン。高山中心部での上質なウエスタンダイニング。</span></p>
+          <a href="https://www.google.com/maps/search/Le+Midi+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e8e0b0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Kaiseki_ryori_Japan.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Kaiseki Japanese cuisine" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0f0d8,#e0e0b8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Tensho</p>
+          <p class="place-name-jp">天昇</p>
+          <p class="place-desc">Quality Japanese cuisine in a traditional setting, drawing regulars from both the local community and visiting guests.<br><span style="color:var(--muted);font-size:0.73rem;">伝統的な雰囲気の中で本格的な和食が楽しめ、地元の常連客から観光客まで幅広く支持されています。</span></p>
+          <a href="https://www.google.com/maps/search/天昇+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#c8dcc0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Japanese_Zaru_Soba.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Soba noodles" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0e0,#c8e0c0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-ramen">Soba</span><span class="badge b-budget">Budget</span></div>
+          <p class="place-name">Ebisu Soba</p>
+          <p class="place-name-jp">恵比寿そば</p>
+          <p class="place-desc">Handmade buckwheat soba in a cozy traditional setting. Simple, honest mountain flavors at a very reasonable price.<br><span style="color:var(--muted);font-size:0.73rem;">手打ちそばが自慢の落ち着いた店。飛騨の山里らしいシンプルで誠実な味わいが楽しめます。</span></p>
+          <a href="https://www.google.com/maps/search/恵比寿そば+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0d0a0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Takayama_ramen.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Takayama ramen" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a5)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-ramen">Ramen</span><span class="badge b-budget">Budget</span></div>
+          <p class="place-name">Jingoroh</p>
+          <p class="place-name-jp">甚五郎ラーメン</p>
+          <p class="place-desc">A go-to for classic Hida-style shoyu ramen. Satisfying, affordable, and well-loved by locals and visitors alike.<br><span style="color:var(--muted);font-size:0.73rem;">飛騨風醤油ラーメンの定番店。リーズナブルで満足度が高く、地元でも観光客にも人気。</span></p>
+          <a href="https://www.google.com/maps/search/甚五郎ラーメン+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0c898;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Tonkotsu_ramen.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ramen" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e0c5,#e0c8a0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-ramen">Ramen</span><span class="badge b-local">Popular</span></div>
+          <p class="place-name">Menya Riki</p>
+          <p class="place-name-jp">麺屋力</p>
+          <p class="place-desc">Popular ramen shop known for its bold, full-bodied broth. Queues form during peak hours — worth every minute.<br><span style="color:var(--muted);font-size:0.73rem;">コクのあるスープが人気のラーメン店。ピーク時には行列ができますが、待つ価値あり。</span></p>
+          <a href="https://www.google.com/maps/search/麺屋力+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0c098;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Gyutan_teishoku.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Yakiniku grilled meat" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d8c5,#e0c0a0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-local">Yakiniku</span><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Karubitaisho</p>
+          <p class="place-name-jp">カルビ大将</p>
+          <p class="place-desc">Casual yakiniku restaurant beloved by locals. Generous cuts of grilled meat at excellent value — a lively evening spot.<br><span style="color:var(--muted);font-size:0.73rem;">地元に愛されるカジュアルな焼肉店。コスパ抜群でボリューム満点、にぎやかな雰囲気が魅力。</span></p>
+          <a href="https://www.google.com/maps/search/カルビ大将+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e8d8a0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Hire_Tonkatsu,_Tonkatsu_Tombo,_Paris_10_January_2017_003.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Tonkatsu" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd0,#e8d8a8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-budget">Budget</span><span class="badge b-local">Popular</span></div>
+          <p class="place-name">Katsuan 41</p>
+          <p class="place-name-jp">勝庵41 高山店</p>
+          <p class="place-desc">Hearty tonkatsu (pork cutlet) sets at great value. A reliable, filling choice that satisfies every time.<br><span style="color:var(--muted);font-size:0.73rem;">リーズナブルなとんかつ定食が充実。ボリューム満点でコストパフォーマンスも抜群です。</span></p>
+          <a href="https://www.google.com/maps/search/勝庵41+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#c8e0c0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Obanzai_Kyoto.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Japanese home cooking" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0f0e0,#c5e0c5)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Megumiya</p>
+          <p class="place-name-jp">恵みや</p>
+          <p class="place-desc">A neighborhood favorite offering generous portions of home-style Japanese cooking in a relaxed, welcoming atmosphere.<br><span style="color:var(--muted);font-size:0.73rem;">家庭的な和食が楽しめる地元の人気店。アットホームな雰囲気と盛りの良さが魅力。</span></p>
+          <a href="https://www.google.com/maps/search/恵みや+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Wagyu_beef_yakiniku.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida beef yakiniku" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5b0,#e0b888)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-beef">Hida Beef</span><span class="badge b-must">Must Visit</span></div>
+          <p class="place-name">Maruaki</p>
+          <p class="place-name-jp">丸明</p>
+          <p class="place-desc">Famous Hida beef shop and yakiniku restaurant at Tenmachi. Offers A5-grade Hida wagyu — yakiniku, shabu-shabu, and sukiyaki. English-speaking staff available.<br><span style="color:var(--muted);font-size:0.73rem;">天満町にある飛騨牛の名店。A5ランクの飛騨和牛を使った焼肉・しゃぶしゃぶ・すき焼きが楽しめます。英語対応スタッフあり。</span></p>
+          <a href="https://www.google.com/maps/search/飛騨牛丸明+高山市天満町" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e0d0a8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Fried_rice_jf4173.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Fried rice" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d8,#e0d0b0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-budget">Budget</span><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Chahan Hana</p>
+          <p class="place-name-jp">チャーハン花</p>
+          <p class="place-desc">Casual spot celebrated for its signature fried rice. Simple, comforting, and budget-friendly — a local staple.<br><span style="color:var(--muted);font-size:0.73rem;">名物チャーハンが絶品のカジュアルな食堂。シンプルでリーズナブルな定番の味。</span></p>
+          <a href="https://www.google.com/maps/search/チャーハン花+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#e8d8a8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Teppanyaki_beef.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida beef teppanyaki" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd8,#e8d8b0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-beef">Hida Beef</span><span class="badge b-local">Old Town</span></div>
+          <p class="place-name">Ajinoyohei</p>
+          <p class="place-name-jp">味の与平</p>
+          <p class="place-desc">Hida beef teppanyaki restaurant in Takayama's historic old town. Watch the chef grill premium A4/A5 Hida wagyu right at your table in a beautifully preserved traditional setting.<br><span style="color:var(--muted);font-size:0.73rem;">高山の古い町並みにある飛騨牛鉄板焼きレストラン。伝統的な建物の中でA4・A5飛騨和牛の鉄板焼きが楽しめます。</span></p>
+          <a href="https://www.google.com/maps/search/味の与平+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ATTRACTIONS ══ -->
+  <section id="attractions" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">🏯</span>
+      <span class="section-title">Attractions</span>
+      <span class="section-title-jp">観光スポット</span>
+    </div>
+    <div class="place-grid three">
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d8c898;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/92/TakayamaStreet.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Sanmachi Suji street" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-culture">Cultural</span></div>
+          <p class="place-name">Sanmachi Suji</p>
+          <p class="place-name-jp">三町筋</p>
+          <p class="place-desc">Takayama's beautifully preserved Edo-period merchant district. Sake breweries, craft shops, and cafés along timeless streets.<br><span style="color:var(--muted);font-size:0.73rem;">江戸時代の面影が残る高山の旧市街。酒蔵や工芸品店、カフェが軒を連ねる高山随一の散策スポット。</span></p>
+          <a href="https://www.google.com/maps/search/三町筋+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#c8d8a8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Miyagawa_River_from_Miyagawa_Morning_Market_20150123.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Miyagawa Morning Market" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0d8,#c8e0b0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-family">Family</span></div>
+          <p class="place-name">Miyagawa Morning Market</p>
+          <p class="place-name-jp">宮川朝市</p>
+          <p class="place-desc">One of Japan's most beloved morning markets. Fresh produce, local pickles, and crafts by the Miyagawa River — best before 9 AM.<br><span style="color:var(--muted);font-size:0.73rem;">日本を代表する朝市のひとつ。新鮮な農産物や漬物、工芸品が並び、午前9時前に訪れるのがおすすめ。</span></p>
+          <a href="https://www.google.com/maps/search/宮川朝市+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d0c8b0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Hida_Folk_Village,_May_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida Folk Village" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d0,#d8cdb8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-family">Family</span><span class="badge b-culture">Cultural</span></div>
+          <p class="place-name">Hida Folk Village</p>
+          <p class="place-name-jp">飛騨の里</p>
+          <p class="place-desc">Open-air museum with over 30 relocated traditional farmhouses. Stunning in every season, with live craft demonstrations.<br><span style="color:var(--muted);font-size:0.73rem;">飛騨各地から移築された合掌造りの建物が30棟以上。四季折々に美しく、伝統工芸の実演も楽しめます。</span></p>
+          <a href="https://www.google.com/maps/search/飛騨の里+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#c0d0e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Shirakawa-go_(2014-06-03).JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shirakawa-go" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0e8f0,#c8d8e8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-unesco">UNESCO</span></div>
+          <p class="place-name">Shirakawa-go</p>
+          <p class="place-name-jp">白川郷</p>
+          <p class="place-desc">UNESCO World Heritage village famous for gassho-zukuri thatched farmhouses. Magical under winter snow — about 1 hour from Takayama.<br><span style="color:var(--muted);font-size:0.73rem;">合掌造りの集落で知られる世界遺産の村。雪景色は格別で、高山から約1時間でアクセスできます。</span></p>
+          <a href="https://www.google.com/maps/search/白川郷" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#b8d4b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/KAMIKOCHI_flom_Tashiro_bridge.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Kamikochi" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5ecd5,#b5d8b5)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-nature">Nature</span></div>
+          <p class="place-name">Kamikochi</p>
+          <p class="place-name-jp">上高地</p>
+          <p class="place-desc">Pristine alpine valley in the Northern Japan Alps with crystal rivers and dramatic peaks. Open May–November only.<br><span style="color:var(--muted);font-size:0.73rem;">北アルプスに囲まれた清流の渓谷。5月〜11月のみ開放される、手つかずの自然の楽園。</span></p>
+          <a href="https://www.google.com/maps/search/上高地" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#a8c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Hirayu-otaki-koen01ss3200.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hirayu Waterfall" onerror="this.parentElement.style.background='linear-gradient(135deg,#d0e8f0,#b0d0e8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-nature">Nature</span></div>
+          <p class="place-name">Hirayu Waterfall</p>
+          <p class="place-name-jp">平湯大滝</p>
+          <p class="place-desc">One of Japan's top 100 waterfalls at 64m, set in lush forest near Hirayu Onsen. Spectacular in both summer and winter.<br><span style="color:var(--muted);font-size:0.73rem;">日本の滝百選に選ばれた高さ64mの名瀑。平湯温泉近くの豊かな森の中に位置し、夏冬ともに見事な景観。</span></p>
+          <a href="https://www.google.com/maps/search/平湯大滝" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#c0d8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Shiroyama_park,_Takayama,_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shiroyama Park" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0ecd8,#c5dcc0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-nature">Nature</span><span class="badge b-family">Free</span></div>
+          <p class="place-name">Shiroyama Park</p>
+          <p class="place-name-jp">城山公園</p>
+          <p class="place-desc">Castle ruins park with panoramic views over old Takayama. Cherry blossoms in spring, vivid foliage in autumn — free entry.<br><span style="color:var(--muted);font-size:0.73rem;">城跡から高山の旧市街を一望できる公園。春の桜、秋の紅葉が特に美しく、入場無料。</span></p>
+          <a href="https://www.google.com/maps/search/城山公園+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d0c8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/20131010_52_Takayama_-_Higashiyama_Walking_Course_(10491222356).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Higashi Teramachi" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d8,#d8d0c0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-culture">Cultural</span><span class="badge b-nature">Scenic</span></div>
+          <p class="place-name">Higashi Teramachi</p>
+          <p class="place-name-jp">東山寺町</p>
+          <p class="place-desc">A peaceful temple-lined walking path on Takayama's eastern hills. A serene escape from the busier sightseeing areas.<br><span style="color:var(--muted);font-size:0.73rem;">東山の丘に続く静かな寺町散策路。観光の喧騒を離れ、高山の歴史に静かに触れることができます。</span></p>
+          <a href="https://www.google.com/maps/search/東山寺町+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d8c8d8;overflow:hidden;padding:0;"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-family">Family</span></div>
+          <p class="place-name">Teddy Bear Eco Village</p>
+          <p class="place-name-jp">テディベアエコビレッジ</p>
+          <p class="place-desc">A charming museum and shop dedicated to teddy bears and eco-conscious living. A delightful stop for families and children.<br><span style="color:var(--muted);font-size:0.73rem;">テディベアとエコをテーマにしたミュージアム＆ショップ。お子様連れのご家族に人気のスポット。</span></p>
+          <a href="https://www.google.com/maps/search/テディベアエコビレッジ+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ONSEN ══ -->
+  <section id="onsen" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">♨️</span>
+      <span class="section-title">Onsen</span>
+      <span class="section-title-jp">温泉</span>
+    </div>
+    <div class="place-grid">
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#a0c8c8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Tsurunoyu_onsen_rotenburo.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hirayu Onsen" onerror="this.parentElement.style.background='linear-gradient(135deg,#c8e8e8,#a0d0d0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-onsen">Onsen</span></div>
+          <p class="place-name">Hirayu Onsen</p>
+          <p class="place-name-jp">平湯温泉</p>
+          <p class="place-desc">One of the oldest hot spring resorts in Hida. Milky white waters and open-air baths set among dense forest — approx. 40 min from Takayama.<br><span style="color:var(--muted);font-size:0.73rem;">飛騨最古の温泉郷のひとつ。乳白色の湯と森に囲まれた露天風呂が魅力。高山から約40分。</span></p>
+          <a href="https://www.google.com/maps/search/平湯温泉" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#b8d0b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Takayama_Green_Hotel_%E9%AB%98%E5%B1%B1%E6%A0%BC%E6%9E%97%E6%97%85%E5%BA%97_-_panoramio.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Takayama Green Hotel" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8d8,#b8d8b8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-onsen">Onsen</span><span class="badge b-local">In Town</span></div>
+          <p class="place-name">Takayama Green Hotel ♨ Onsen</p>
+          <p class="place-name-jp">高山グリーンホテル</p>
+          <p class="place-desc">Day-use onsen available at this well-known hotel in central Takayama. Indoor and outdoor baths with relaxing mountain views.<br><span style="color:var(--muted);font-size:0.73rem;">高山市内に位置する人気ホテルの日帰り温泉。山の景色を眺めながら内湯・露天風呂が楽しめます。</span></p>
+          <a href="https://www.google.com/maps/search/高山グリーンホテル" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ SKI ══ -->
+  <section id="ski" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">⛷️</span>
+      <span class="section-title">Ski Resorts</span>
+      <span class="section-title-jp">スキー場</span>
+    </div>
+    <div class="place-grid">
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#b8c8e8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Shinhotaka_Ropeway_(2018-06-22).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shinhotaka Ropeway" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e0f0,#b5c8ec)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-must">Must Visit</span><span class="badge b-winter">Winter</span></div>
+          <p class="place-name">Shinhotaka</p>
+          <p class="place-name-jp">新穂高ロープウェイ</p>
+          <p class="place-desc">Premier resort featuring Japan's only double-decker gondola and breathtaking Northern Alps views. About 1 hour from Takayama.<br><span style="color:var(--muted);font-size:0.73rem;">日本唯一の2階建てロープウェイがある名リゾート。北アルプスの絶景が楽しめます。高山から約1時間。</span></p>
+          <a href="https://www.google.com/maps/search/新穂高ロープウェイ" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#bcd0ec;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Norikura_kogen_ski_area.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ski resort" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8f5,#b8d0ec)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-winter">Winter</span><span class="badge b-family">Family</span></div>
+          <p class="place-name">Hounoki Daira</p>
+          <p class="place-name-jp">ほうのき平スキー場</p>
+          <p class="place-desc">Family-friendly resort with gentle slopes and well-maintained facilities. Ideal for beginners and guests skiing with children.<br><span style="color:var(--muted);font-size:0.73rem;">緩やかなコースが充実したファミリー向けスキー場。初心者やお子様連れの方に最適です。</span></p>
+          <a href="https://www.google.com/maps/search/ほうのき平スキー場" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#b0c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Naeba_ski_resort.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ski resort with onsen" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e5f0,#b0c8e0)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-winter">Winter</span><span class="badge b-onsen">Onsen</span></div>
+          <p class="place-name">Hirayu no Mori</p>
+          <p class="place-name-jp">平湯の森スキー場</p>
+          <p class="place-desc">Ski resort combined with a renowned onsen facility. Hit the slopes, then soak in natural hot springs — the perfect winter day.<br><span style="color:var(--muted);font-size:0.73rem;">スキーと温泉の両方が楽しめるリゾート。滑った後に天然温泉で疲れを癒す、冬の完璧な一日。</span></p>
+          <a href="https://www.google.com/maps/search/平湯の森スキー場" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ RELAX ══ -->
+  <section id="relax" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">💆</span>
+      <span class="section-title">Relax</span>
+      <span class="section-title-jp">リラクゼーション</span>
+    </div>
+    <div class="place-grid">
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d8c8e4;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Takanoyu_Onsen_Rotenburo_003.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Relaxation spa" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede5f5,#d4c8e4)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-spa">Massage</span><span class="badge b-local">Local Fav</span></div>
+          <p class="place-name">Cachette Rinka</p>
+          <p class="place-name-jp">カシェット琳花</p>
+          <p class="place-desc">Well-regarded relaxation salon offering therapeutic body treatments and massage in a calm, refined atmosphere.<br><span style="color:var(--muted);font-size:0.73rem;">落ち着いた雰囲気の中で本格的なボディケアとマッサージが受けられると評判のサロン。</span></p>
+          <a href="https://www.google.com/maps/search/カシェット琳花+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#b8d4e8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Takanoyu_Onsen_Rotenburo_003.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Relaxation spa" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8eef8,#b8d4e8)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-spa">Spa</span></div>
+          <p class="place-name">HydroSpa</p>
+          <p class="place-name-jp">ハイドロスパ</p>
+          <p class="place-desc">Hydrotherapy spa offering a restorative water-based treatment experience. A wonderful way to unwind after a day of sightseeing.<br><span style="color:var(--muted);font-size:0.73rem;">水を使ったセラピー体験が受けられるスパ。観光で疲れた体をリフレッシュするのに最適。</span></p>
+          <a href="https://www.google.com/maps/search/HydroSpa+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+      <div class="place-card">
+        <div class="place-thumb" style="background:#d4cce4;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Takanoyu_Onsen_Rotenburo_003.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Relaxation spa" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede8f5,#d4cce4)';this.remove()"></div>
+        <div class="place-info">
+          <div class="place-badges"><span class="badge b-spa">Massage</span></div>
+          <p class="place-name">Luck de Relaxation Sosuke</p>
+          <p class="place-name-jp">ラックデリラクゼーション 宗助 2F</p>
+          <p class="place-desc">Located on the 2nd floor, this relaxation salon provides massage and bodywork treatments — ideal for easing travel fatigue.<br><span style="color:var(--muted);font-size:0.73rem;">2階にあるリラクゼーションサロン。マッサージやボディケアで旅の疲れをしっかり癒してください。</span></p>
+          <a href="https://www.google.com/maps/search/ラックデリラクゼーション宗助+高山市" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+            Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ SHOPS ══ -->
+  <section id="shops" class="section-block">
+    <div class="section-header">
+      <span class="section-icon">🛒</span>
+      <span class="section-title">Supermarket & Convenience</span>
+      <span class="section-title-jp">スーパー・コンビニ</span>
+    </div>
+    <div class="shop-grid">
+
+      <a href="https://maps.app.goo.gl/G25LTyn5UXZ6UrR48" target="_blank" class="shop-card">
+        <div class="shop-left">
+          <div class="shop-icon">🏪</div>
+          <div>
+            <p class="shop-name">Supermarket</p>
+            <p class="shop-sub">Nearest supermarket to the ryokan</p>
+          </div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://maps.app.goo.gl/NuwcW7okTTpnpD7n8" target="_blank" class="shop-card">
+        <div class="shop-left">
+          <div class="shop-icon">🛒</div>
+          <div>
+            <p class="shop-name">Supermarket · Asumo</p>
+            <p class="shop-sub">Full-service supermarket — fresh produce, deli, daily essentials</p>
+          </div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://maps.app.goo.gl/7u1CRJZW7kae3nEC8" target="_blank" class="shop-card">
+        <div class="shop-left">
+          <div class="shop-icon">🏪</div>
+          <div>
+            <p class="shop-name">Convenience Store</p>
+            <p class="shop-sub">Open late — snacks, drinks & daily essentials</p>
+          </div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<div class="guide-footer">
+  <a href="index.html">← Return to Guest Manual</a>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.section-nav a');
+  function updateNav() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+</body>
+</html>
