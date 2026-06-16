@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
-
   <style>
     /* ── DESIGN TOKENS ── */
     :root {
@@ -25,12 +24,9 @@
       --card-bg:   rgba(255,253,248,0.96);
       --shadow:    0 2px 24px rgba(26,22,18,0.07);
     }
-
     /* ── RESET & BASE ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { font-size: 15px; scroll-behavior: smooth; }
-
     body {
       background-color: var(--cream);
       color: var(--ink);
@@ -42,9 +38,7 @@
         radial-gradient(ellipse 80% 50% at 50% -10%, rgba(184,150,90,0.10) 0%, transparent 70%),
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23b8965a' opacity='0.18'/%3E%3C/svg%3E");
     }
-
     a { color: inherit; text-decoration: none; }
-
     /* ── HERO HEADER ── */
     .hero {
       position: relative;
@@ -89,7 +83,6 @@
       font-weight: 400;
       color: #e8c98a;
     }
-
     /* ── NAV STRIP ── */
     .topnav {
       background: var(--ink);
@@ -108,7 +101,6 @@
     }
     .topnav a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
     .topnav a:hover { color: #e8c98a; background: rgba(255,255,255,0.04); }
-
     /* ── MAIN LAYOUT ── */
     .main {
       max-width: 600px;
@@ -118,7 +110,6 @@
       flex-direction: column;
       gap: 16px;
     }
-
     /* ── SECTION CARD ── */
     .card {
       background: var(--card-bg);
@@ -135,20 +126,21 @@
     .card:nth-child(5) { animation-delay: 0.25s; }
     .card:nth-child(6) { animation-delay: 0.30s; }
     .card:nth-child(7) { animation-delay: 0.35s; }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* Card header */
+    /* Card header — clickable accordion trigger */
     .card-head {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 18px 20px 14px;
-      border-bottom: 1px solid var(--border);
+      padding: 18px 20px 18px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.18s;
     }
+    .card-head:hover { background: var(--sand); }
     .card-icon {
       width: 36px; height: 36px; flex-shrink: 0;
       background: var(--sand);
@@ -162,11 +154,27 @@
       font-size: 1.05rem;
       color: var(--rust);
       letter-spacing: 0.04em;
+      flex: 1;
     }
-
-    /* Card body */
-    .card-body { padding: 10px 0; }
-
+    /* Chevron icon */
+    .card-chevron {
+      width: 20px; height: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.28s ease;
+    }
+    .card-chevron svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .card-head.open .card-chevron { transform: rotate(180deg); }
+    /* Card body — collapsed by default */
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.32s ease;
+      border-top: 0px solid var(--border);
+    }
+    .card-body.open {
+      max-height: 800px;
+      border-top: 1px solid var(--border);
+    }
     /* List links */
     .link-list { list-style: none; }
     .link-list li a {
@@ -194,7 +202,6 @@
       background-position: center;
       opacity: 0.6;
     }
-
     /* Info text (no link) */
     .info-text {
       padding: 14px 20px;
@@ -204,7 +211,6 @@
       border-bottom: 1px solid rgba(232,223,208,0.5);
     }
     .info-text:last-child { border-bottom: none; }
-
     /* Wi-Fi credential block */
     .wifi-block {
       display: flex;
@@ -243,7 +249,6 @@
       transition: color 0.2s;
     }
     .wifi-copy:hover { color: var(--rust); }
-
     /* Big link tile */
     .tile-link {
       display: flex;
@@ -273,7 +278,6 @@
       flex-shrink: 0;
     }
     .tile-arrow svg { width: 10px; height: 10px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
-
     /* About / amenity prose */
     .prose {
       padding: 14px 20px;
@@ -296,7 +300,6 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-
     /* Quick-links row */
     .quick-links {
       display: flex;
@@ -318,7 +321,6 @@
       cursor: pointer;
     }
     .ql:hover { border-color: var(--rust); color: var(--rust); background: rgba(139,74,47,0.04); }
-
     /* Divider rule */
     .rule {
       display: flex; align-items: center; gap: 10px;
@@ -335,7 +337,6 @@
       color: var(--gold);
       text-transform: uppercase;
     }
-
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -366,7 +367,6 @@
       letter-spacing: 0.08em;
     }
     .mon { display: inline-block; margin: 0 6px; color: var(--gold); }
-
     /* Toast */
     #toast {
       position: fixed; bottom: 24px; left: 50%;
@@ -378,7 +378,6 @@
       opacity: 0; pointer-events: none; z-index: 999;
     }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
     /* ==================== WEATHER MODAL ==================== */
     .weather-modal {
       position: fixed;
@@ -391,7 +390,6 @@
       z-index: 9999;
       padding: 20px;
     }
-
     .modal-content {
       background: var(--card-bg);
       width: 100%;
@@ -401,7 +399,6 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
     }
-
     .modal-header {
       padding: 16px 20px;
       background: var(--rust);
@@ -410,30 +407,23 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .modal-header h3 {
       margin: 0;
       font-size: 1.1rem;
       letter-spacing: 0.05em;
     }
-
     .close-btn {
       font-size: 28px;
       line-height: 1;
       cursor: pointer;
       opacity: 0.8;
     }
-
-    .close-btn:hover {
-      opacity: 1;
-    }
-
+    .close-btn:hover { opacity: 1; }
     .modal-body {
       padding: 20px;
       max-height: 75vh;
       overflow-y: auto;
     }
-
     /* Mobile refinements */
     @media (max-width: 400px) {
       .hero { height: 210px; }
@@ -442,7 +432,6 @@
   </style>
 </head>
 <body>
-
 <!-- HERO -->
 <div class="hero">
   <img class="hero-img" src="ichinomatsu-photo.png" alt="Ryokan Takayama" />
@@ -452,24 +441,24 @@
     <p class="hero-sub">Ichinomatsu Japanese Modern Hotel</p>
   </div>
 </div>
-
 <!-- TOP NAV -->
 <nav class="topnav">
   <a href="#">HOME</a>
   <a href="ichinomatsu-terms.pdf">Important Info</a>
   <a href="https://maps.app.goo.gl/ktBW3U21Nw87t8sH8" target="_blank">Map</a>
 </nav>
-
 <!-- MAIN CONTENT -->
 <main class="main">
-
   <!-- 1. ROOM MANUAL -->
   <div class="card">
-    <div class="card-head">
+    <div class="card-head" onclick="toggleCard(this)">
       <div class="card-icon">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
       <span class="card-label">Room Manual</span>
+      <div class="card-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
     <div class="card-body">
       <ul class="link-list">
@@ -481,14 +470,16 @@
       </ul>
     </div>
   </div>
-
   <!-- 2. WI-FI -->
   <div class="card">
-    <div class="card-head">
+    <div class="card-head" onclick="toggleCard(this)">
       <div class="card-icon">
         <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg>
       </div>
       <span class="card-label">Wi-Fi</span>
+      <div class="card-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
     <div class="card-body">
       <div class="wifi-block">
@@ -505,42 +496,50 @@
       </div>
     </div>
   </div>
-
   <!-- Quick tiles: Parking -->
   <div class="card">
-    <a href="parking.pdf" class="tile-link">
-      <span class="tile-link-label">Parking Information / 駐車場のご案内</span>
-      <div class="tile-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    <a href="parking.pdf" class="card-head" style="text-decoration:none;">
+      <div class="card-icon">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:var(--rust); letter-spacing:0.05em;">P</span>
+      </div>
+      <span class="card-label">Parking Information / 駐車場のご案内</span>
+      <div class="card-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </a>
   </div>
-
   <!-- 3. SERVICES -->
   <div class="card">
-    <div class="card-head">
+    <div class="card-head" onclick="toggleCard(this)">
       <div class="card-icon">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <span class="card-label">Guest Services / ご案内</span>
+      <div class="card-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
     <div class="card-body">
       <ul class="link-list">
-        <li><a href="#"id="lending-trigger">Free Lending Items / 無料貸出品</a></li>
+        <li><a href="#" id="lending-trigger">Free Lending Items / 無料貸出品</a></li>
         <li><a href="children.pdf">For Guests with Children / お子様連れのお客様へ</a></li>
-        <li><a href="#"id="paid-trigger">Paid Services / 有料サービス</a></li>
+        <li><a href="#" id="paid-trigger">Paid Services / 有料サービス</a></li>
         <li><a href="room_cleaning_guide.pdf">Housekeeping for Long-Stay Guests / 連泊のお客様の清掃について</a></li>
-        <li><a href="#"id="taxi-trigger">Need a Taxi? / タクシーのご手配</a></li>
+        <li><a href="#" id="taxi-trigger">Need a Taxi? / タクシーのご手配</a></li>
         <li><a href="#" id="checkout-trigger">Late Check-out / レイトチェックアウト</a></li>
       </ul>
     </div>
   </div>
-
   <!-- 4. AMENITY -->
   <div class="card">
-    <div class="card-head">
+    <div class="card-head" onclick="toggleCard(this)">
       <div class="card-icon">
         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
       </div>
       <span class="card-label">Amenities</span>
+      <div class="card-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
     <div class="card-body">
       <div class="info-text">
@@ -553,13 +552,13 @@
         <span style="color:var(--rust); font-size:0.84rem;">
            Please note that bath towels and yukata are property of the ryokan. We kindly ask that they remain in the room upon checkout.<br>
           バスタオルおよび浴衣は旅館の備品です。チェックアウトの際はお持ち帰りをご遠慮ください。
+        </span>
       </div>
     </div>
   </div>
-
   <!-- 5. WEATHER & SNS -->
   <div class="card">
-    <div class="card-body">
+    <div class="card-body open" style="border-top:none;">
       <div class="quick-links">
         <a href="#" id="weather-trigger" class="ql">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg>
@@ -576,9 +575,7 @@
       </div>
     </div>
   </div>
-
 </main>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-links">
@@ -590,10 +587,8 @@
     Copyright © <span class="mon">御</span>  ICHINOMATSU JAPANESE MODERN HOTEL — All Rights Reserved
   </p>
 </footer>
-
 <!-- TOAST -->
 <div id="toast">Copied to clipboard ✓</div>
-
 <!-- ==================== WEATHER MODAL ==================== -->
 <div id="weather-modal" class="weather-modal">
   <div class="modal-content">
@@ -602,17 +597,16 @@
       <span id="close-modal" class="close-btn">✕</span>
     </div>
     <div class="modal-body">
-      <a class="weatherwidget-io" 
-         href="https://forecast7.com/en/36d15137d25/takayama/" 
-         data-label_1="TAKAYAMA" 
-         data-label_2="WEATHER" 
+      <a class="weatherwidget-io"
+         href="https://forecast7.com/en/36d15137d25/takayama/"
+         data-label_1="TAKAYAMA"
+         data-label_2="WEATHER"
          data-theme="original">
          TAKAYAMA WEATHER
       </a>
     </div>
   </div>
 </div>
-
 <!-- ==================== WASHER MODAL ==================== -->
 <div id="washer-modal" class="weather-modal">
   <div class="modal-content">
@@ -642,8 +636,7 @@
     </div>
   </div>
 </div>
-
-  <!-- ==================== LENDING MODAL ==================== -->
+<!-- ==================== LENDING MODAL ==================== -->
 <div id="lending-modal" class="weather-modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -669,7 +662,6 @@
     </div>
   </div>
 </div>
-
 <!-- ==================== PAID SERVICES MODAL ==================== -->
 <div id="paid-modal" class="weather-modal">
   <div class="modal-content">
@@ -690,7 +682,6 @@
     </div>
   </div>
 </div>
-
 <!-- ==================== TAXI MODAL ==================== -->
 <div id="taxi-modal" class="weather-modal">
   <div class="modal-content">
@@ -717,7 +708,6 @@
     </div>
   </div>
 </div>
-
 <!-- ==================== LATE CHECK-OUT MODAL ==================== -->
 <div id="checkout-modal" class="weather-modal">
   <div class="modal-content">
@@ -742,9 +732,17 @@
       </p>
     </div>
   </div>
-</div>  
-
+</div>
 <script>
+  /* ── ACCORDION ── */
+  function toggleCard(head) {
+    const body = head.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    head.classList.toggle('open', !isOpen);
+  }
+
+  /* ── COPY WI-FI ── */
   function copyText(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -755,76 +753,27 @@
     });
   }
 
+  /* ── WEATHER WIDGET ── */
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
 
   document.addEventListener('DOMContentLoaded', function() {
-    const trigger = document.getElementById('weather-trigger');
-    const modal = document.getElementById('weather-modal');
-    const closeBtn = document.getElementById('close-modal');
-    if (trigger && modal && closeBtn) {
-      trigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        modal.style.display = 'flex';
-      });
-      closeBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-      });
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) modal.style.display = 'none';
-      });
+    /* Helper: open/close modal */
+    function bindModal(triggerId, modalId, closeBtnId) {
+      const trigger = document.getElementById(triggerId);
+      const modal = document.getElementById(modalId);
+      const closeBtn = document.getElementById(closeBtnId);
+      if (!trigger || !modal || !closeBtn) return;
+      trigger.addEventListener('click', function(e) { e.preventDefault(); modal.style.display = 'flex'; });
+      closeBtn.addEventListener('click', function() { modal.style.display = 'none'; });
+      modal.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
     }
 
-    const washerTrigger = document.getElementById('washer-trigger');
-    const washerModal = document.getElementById('washer-modal');
-    const closeWasherBtn = document.getElementById('close-washer-modal');
-    if (washerTrigger && washerModal && closeWasherBtn) {
-      washerTrigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        washerModal.style.display = 'flex';
-      });
-      closeWasherBtn.addEventListener('click', function() {
-        washerModal.style.display = 'none';
-      });
-      washerModal.addEventListener('click', function(e) {
-        if (e.target === washerModal) washerModal.style.display = 'none';
-      });
-    }
-
-    const lendingTrigger = document.getElementById('lending-trigger');
-    const lendingModal = document.getElementById('lending-modal');
-    const closeLendingBtn = document.getElementById('close-lending-modal');
-    if (lendingTrigger && lendingModal && closeLendingBtn) {
-      lendingTrigger.addEventListener('click', function(e) { e.preventDefault(); lendingModal.style.display = 'flex'; });
-      closeLendingBtn.addEventListener('click', function() { lendingModal.style.display = 'none'; });
-      lendingModal.addEventListener('click', function(e) { if (e.target === lendingModal) lendingModal.style.display = 'none'; });
-    }
-
-    const paidTrigger = document.getElementById('paid-trigger');
-    const paidModal = document.getElementById('paid-modal');
-    const closePaidBtn = document.getElementById('close-paid-modal');
-    if (paidTrigger && paidModal && closePaidBtn) {
-      paidTrigger.addEventListener('click', function(e) { e.preventDefault(); paidModal.style.display = 'flex'; });
-      closePaidBtn.addEventListener('click', function() { paidModal.style.display = 'none'; });
-      paidModal.addEventListener('click', function(e) { if (e.target === paidModal) paidModal.style.display = 'none'; });
-    }
-
-    const taxiTrigger = document.getElementById('taxi-trigger');
-    const taxiModal = document.getElementById('taxi-modal');
-    const closeTaxiBtn = document.getElementById('close-taxi-modal');
-    if (taxiTrigger && taxiModal && closeTaxiBtn) {
-      taxiTrigger.addEventListener('click', function(e) { e.preventDefault(); taxiModal.style.display = 'flex'; });
-      closeTaxiBtn.addEventListener('click', function() { taxiModal.style.display = 'none'; });
-      taxiModal.addEventListener('click', function(e) { if (e.target === taxiModal) taxiModal.style.display = 'none'; });
-    }
-
-    const checkoutTrigger = document.getElementById('checkout-trigger');
-    const checkoutModal = document.getElementById('checkout-modal');
-    const closeCheckoutBtn = document.getElementById('close-checkout-modal');
-    if (checkoutTrigger && checkoutModal && closeCheckoutBtn) {
-      checkoutTrigger.addEventListener('click', function(e) { e.preventDefault(); checkoutModal.style.display = 'flex'; });
-      closeCheckoutBtn.addEventListener('click', function() { checkoutModal.style.display = 'none'; });
-      checkoutModal.addEventListener('click', function(e) { if (e.target === checkoutModal) checkoutModal.style.display = 'none'; });
-    }
+    bindModal('weather-trigger',  'weather-modal',  'close-modal');
+    bindModal('washer-trigger',   'washer-modal',   'close-washer-modal');
+    bindModal('lending-trigger',  'lending-modal',  'close-lending-modal');
+    bindModal('paid-trigger',     'paid-modal',     'close-paid-modal');
+    bindModal('taxi-trigger',     'taxi-modal',     'close-taxi-modal');
+    bindModal('checkout-trigger', 'checkout-modal', 'close-checkout-modal');
   });
 </script>
 </body>
