@@ -247,9 +247,6 @@
       overflow: hidden;
       position: relative;
     }
-    .place-card.expanded .place-desc { overflow-y: auto; }
-    .place-desc::-webkit-scrollbar { width: 3px; }
-    .place-desc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     /* fade hint at bottom when text is clamped */
     .place-desc::after {
       content: '';
@@ -259,7 +256,7 @@
       pointer-events: none;
       display: none;
     }
-    .place-card.has-more:not(.expanded) .place-desc::after { display: block; }
+    .place-card.has-more .place-desc::after { display: block; }
     /* MORE / LESS toggle */
     .more-btn {
       display: none;
@@ -276,6 +273,107 @@
     }
     .more-btn:hover { text-decoration: underline; }
     .place-card.has-more .more-btn { display: inline-block; }
+    /* ── DETAIL SHEET (popup for full content) ── */
+    .sheet-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(26,22,18,0.55);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .sheet-overlay.open { opacity: 1; visibility: visible; }
+    .sheet {
+      background: var(--cream);
+      width: 100%;
+      max-width: 560px;
+      max-height: 85vh;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -8px 40px rgba(26,22,18,0.3);
+      transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(0.22,1,0.36,1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sheet-overlay.open .sheet { transform: translateY(0); }
+    .sheet-handle {
+      flex-shrink: 0;
+      padding: 10px 0 6px;
+      display: flex;
+      justify-content: center;
+    }
+    .sheet-handle span {
+      width: 38px; height: 4px;
+      border-radius: 4px;
+      background: var(--border);
+    }
+    .sheet-img {
+      flex-shrink: 0;
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+    .sheet-body {
+      padding: 16px 20px 28px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sheet-body .place-badges { margin-bottom: 8px; }
+    .sheet-name {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .sheet-name-jp {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 2px 0 12px;
+    }
+    .sheet-desc {
+      font-size: 0.9rem;
+      color: var(--ink);
+      line-height: 1.85;
+    }
+    .sheet-desc span { font-size: 0.82rem !important; display: block; margin-top: 8px; }
+    .sheet-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 18px;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--rust);
+      border-radius: 22px;
+      padding: 9px 18px;
+    }
+    .sheet-map svg { width: 12px; height: 12px; }
+    .sheet-close {
+      position: absolute;
+      top: 12px; right: 14px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
     .map-btn {
       display: inline-flex;
       align-items: center;
@@ -874,6 +972,24 @@
   <a href="index.html">← Return to Guest Manual</a>
   <span style="margin:0 12px;color:var(--border);">|</span>
 </div>
+<!-- DETAIL SHEET -->
+<div class="sheet-overlay" id="detailSheet">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <button class="sheet-close" id="sheetClose" aria-label="Close">×</button>
+    <div class="sheet-handle"><span></span></div>
+    <img class="sheet-img" id="sheetImg" alt="">
+    <div class="sheet-body">
+      <div class="place-badges" id="sheetBadges"></div>
+      <p class="sheet-name" id="sheetName"></p>
+      <p class="sheet-name-jp" id="sheetNameJp"></p>
+      <p class="sheet-desc" id="sheetDesc"></p>
+      <a class="sheet-map" id="sheetMap" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>
+        Open in Maps
+      </a>
+    </div>
+  </div>
+</div>
 <script>
   /* ── section nav highlight ── */
   const sections = document.querySelectorAll('section[id]');
@@ -886,7 +1002,44 @@
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-  /* ── uniform cards: inject "More / Less" toggle, shown only when text overflows ── */
+  /* ── detail sheet (popup) elements ── */
+  const overlay   = document.getElementById('detailSheet');
+  const elImg     = document.getElementById('sheetImg');
+  const elBadges  = document.getElementById('sheetBadges');
+  const elName    = document.getElementById('sheetName');
+  const elNameJp  = document.getElementById('sheetNameJp');
+  const elDesc    = document.getElementById('sheetDesc');
+  const elMap     = document.getElementById('sheetMap');
+
+  function openSheet(card) {
+    const img    = card.querySelector('.place-thumb img');
+    const badges = card.querySelector('.place-badges');
+    const name   = card.querySelector('.place-name');
+    const nameJp = card.querySelector('.place-name-jp');
+    const desc   = card.querySelector('.place-desc');
+    const map    = card.querySelector('.map-btn');
+
+    if (img && img.getAttribute('src')) { elImg.src = img.src; elImg.style.display = 'block'; }
+    else { elImg.style.display = 'none'; }
+    elBadges.innerHTML = badges ? badges.innerHTML : '';
+    elName.textContent = name ? name.textContent : '';
+    elNameJp.textContent = nameJp ? nameJp.textContent : '';
+    elDesc.innerHTML = desc ? desc.innerHTML : '';
+    if (map) { elMap.href = map.getAttribute('href'); elMap.style.display = 'inline-flex'; }
+    else { elMap.style.display = 'none'; }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSheet() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeSheet(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+
+  /* ── inject "More" button, shown only when the description overflows ── */
   document.querySelectorAll('.place-card').forEach(card => {
     const info = card.querySelector('.place-info');
     const desc = card.querySelector('.place-desc');
@@ -897,17 +1050,12 @@
     btn.className = 'more-btn';
     btn.textContent = 'More ▾';
     if (map) info.insertBefore(btn, map); else info.appendChild(btn);
-    btn.addEventListener('click', () => {
-      const open = card.classList.toggle('expanded');
-      btn.textContent = open ? 'Less ▴' : 'More ▾';
-      if (!open) desc.scrollTop = 0;
-    });
+    btn.addEventListener('click', () => openSheet(card));
   });
 
   /* mark cards whose description is clamped (so "More" appears only when needed) */
   function checkClamp() {
     document.querySelectorAll('.place-card').forEach(card => {
-      if (card.classList.contains('expanded')) return;
       const desc = card.querySelector('.place-desc');
       if (!desc) return;
       card.classList.toggle('has-more', desc.scrollHeight > desc.clientHeight + 2);
