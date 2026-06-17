@@ -31,7 +31,6 @@
       line-height: 1.7;
     }
     a { color: inherit; text-decoration: none; }
-
     /* ── BACK BAR ── */
     .back-bar {
       background: var(--ink);
@@ -48,7 +47,6 @@
       transition: color 0.2s;
     }
     .back-bar a:hover { color: #e8c98a; }
-
     /* ── HERO ── */
     .guide-hero {
       background: linear-gradient(140deg, #1a1612 0%, #2d1f14 55%, #3a2010 100%);
@@ -87,7 +85,6 @@
       text-transform: uppercase;
       position: relative;
     }
-
     /* ── STICKY NAV ── */
     .section-nav {
       position: sticky;
@@ -122,14 +119,12 @@
     }
     .section-nav a:hover,
     .section-nav a.active { color: var(--rust); border-bottom-color: var(--rust); }
-
     /* ── MAIN ── */
     .guide-main {
       max-width: 800px;
       margin: 0 auto;
       padding: 36px 14px 64px;
     }
-
     /* ── SECTION ── */
     .section-block { margin-bottom: 52px; }
     .section-header {
@@ -157,18 +152,17 @@
       font-style: normal;
       white-space: nowrap;
     }
-
     /* ── PLACE GRID ── */
     .place-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 11px;
+      align-items: stretch;
     }
     @media (min-width: 560px) {
       .place-grid.three { grid-template-columns: repeat(3, 1fr); }
     }
-
-    /* ── PLACE CARD ── */
+    /* ── PLACE CARD (uniform size — same aspect ratio everywhere) ── */
     .place-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -177,28 +171,36 @@
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
+      aspect-ratio: 5 / 9;     /* every card identical proportions */
+      min-height: 0;
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .place-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 32px rgba(26,22,18,0.11);
     }
+    /* image = top half of the card */
     .place-thumb {
-      height: 90px;
-      flex-shrink: 0;
+      flex: 0 0 50%;
+      height: 50%;
       overflow: hidden;
     }
+    /* content = bottom half */
     .place-info {
-      padding: 11px 13px 13px;
-      flex: 1;
+      padding: 10px 12px 11px;
+      flex: 0 0 50%;
+      height: 50%;
+      min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
+      overflow: hidden;
     }
     .place-badges {
       display: flex;
       flex-wrap: wrap;
       gap: 3px;
+      flex-shrink: 0;
     }
     .badge {
       font-size: 0.6rem;
@@ -221,30 +223,64 @@
     .b-unesco  { background:#b8965a22; color:#8a6a30; border:1px solid #b8965a44; }
     .b-spa     { background:#2a6a7a1a; color:#1e5a66; }
     .b-ramen   { background:#8a5a201a; color:#7a4a18; }
-
     .place-name {
       font-size: 0.87rem;
       font-weight: 500;
       color: var(--ink);
       line-height: 1.25;
+      flex-shrink: 0;
     }
     .place-name-jp {
       font-size: 0.74rem;
       color: var(--muted);
       font-weight: 300;
       margin-top: -2px;
+      flex-shrink: 0;
     }
+    /* description: fills remaining space, hidden when too long */
     .place-desc {
       font-size: 0.77rem;
       color: var(--muted);
       line-height: 1.6;
-      flex: 1;
+      flex: 1 1 0;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
     }
+    .place-card.expanded .place-desc { overflow-y: auto; }
+    .place-desc::-webkit-scrollbar { width: 3px; }
+    .place-desc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    /* fade hint at bottom when text is clamped */
+    .place-desc::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 18px;
+      background: linear-gradient(to bottom, rgba(250,247,242,0), var(--card-bg));
+      pointer-events: none;
+      display: none;
+    }
+    .place-card.has-more:not(.expanded) .place-desc::after { display: block; }
+    /* MORE / LESS toggle */
+    .more-btn {
+      display: none;
+      align-self: flex-start;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--rust);
+      flex-shrink: 0;
+    }
+    .more-btn:hover { text-decoration: underline; }
+    .place-card.has-more .more-btn { display: inline-block; }
     .map-btn {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      margin-top: 7px;
+      margin-top: 5px;
       font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -253,11 +289,11 @@
       border-radius: 20px;
       padding: 4px 10px;
       align-self: flex-start;
+      flex-shrink: 0;
       transition: all 0.18s;
     }
     .map-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
     .map-btn svg { width: 9px; height: 9px; }
-
     /* ── SHOP ROW ── */
     .shop-grid { display: flex; flex-direction: column; gap: 9px; }
     .shop-card {
@@ -282,7 +318,6 @@
     }
     .shop-name { font-size: 0.88rem; font-weight: 400; }
     .shop-sub  { font-size: 0.75rem; color: var(--muted); }
-
     /* ── FOOTER ── */
     .guide-footer {
       text-align: center;
@@ -299,14 +334,9 @@
       transition: color 0.2s;
     }
     .guide-footer a:hover { color: var(--rust); }
-
-    @media (max-width: 340px) {
-      .place-grid, .place-grid.three { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
-
 <!-- BACK BAR -->
 <div class="back-bar">
   <a href="index.html">
@@ -314,14 +344,12 @@
     Back to Guest Manual
   </a>
 </div>
-
 <!-- HERO -->
 <div class="guide-hero">
   <p class="guide-hero-label">Ichinomatsu Recommends</p>
   <h1>Takayama <em>Local Guide</em></h1>
   <p class="guide-hero-sub">高山おすすめスポット</p>
 </div>
-
 <!-- STICKY NAV -->
 <nav class="section-nav">
   <div class="section-nav-inner">
@@ -333,10 +361,8 @@
     <a href="#shops">🛒 Shops</a>
   </div>
 </nav>
-
 <!-- MAIN -->
 <main class="guide-main">
-
   <!-- ══ RESTAURANTS ══ -->
   <section id="restaurants" class="section-block">
     <div class="section-header">
@@ -345,7 +371,6 @@
       <span class="section-title-jp">レストラン・飲食店</span>
     </div>
     <div class="place-grid three">
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0c4a0;overflow:hidden;padding:0;"><img src="suzuya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hoba miso Hida beef yakiniku" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5bc,#e0b898)';this.remove()"></div>
         <div class="place-info">
@@ -359,7 +384,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="ajikura.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wagyu yakiniku grilled beef" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d0b5,#e0b090)';this.remove()"></div>
         <div class="place-info">
@@ -373,7 +397,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d8e8b8;overflow:hidden;padding:0;"><img src="houshou.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Japanese kaiseki set meal" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8f0d5,#d0e0b0)';this.remove()"></div>
         <div class="place-info">
@@ -387,7 +410,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b8d4e8;overflow:hidden;padding:0;"><img src="maruiya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Assorted sashimi" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8eef8,#b8d4e8)';this.remove()"></div>
         <div class="place-info">
@@ -401,7 +423,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d4c8e8;overflow:hidden;padding:0;"><img src="lemidi.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Steak dish" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0f0,#d4c8e8)';this.remove()"></div>
         <div class="place-info">
@@ -415,7 +436,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e8e0b0;overflow:hidden;padding:0;"><img src="tensho.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Japanese kaiseki multi-course meal" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0f0d8,#e0e0b8)';this.remove()"></div>
         <div class="place-info">
@@ -429,7 +449,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#c8dcc0;overflow:hidden;padding:0;"><img src="ebisusoba.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Soba noodles" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0e0,#c8e0c0)';this.remove()"></div>
         <div class="place-info">
@@ -443,7 +462,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0d0a0;overflow:hidden;padding:0;"><img src="jingorohramen.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Takayama ramen" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a5)';this.remove()"></div>
         <div class="place-info">
@@ -457,7 +475,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0c898;overflow:hidden;padding:0;"><img src="menyariki.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ramen" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e0c5,#e0c8a0)';this.remove()"></div>
         <div class="place-info">
@@ -471,7 +488,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0c098;overflow:hidden;padding:0;"><img src="karubitaisho.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Yakiniku grilled meat" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d8c5,#e0c0a0)';this.remove()"></div>
         <div class="place-info">
@@ -485,7 +501,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e8d8a0;overflow:hidden;padding:0;"><img src="katsuan.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Tonkatsu" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd0,#e8d8a8)';this.remove()"></div>
         <div class="place-info">
@@ -499,7 +514,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#c8e0c0;overflow:hidden;padding:0;"><img src="megumiya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wagyu steak" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0f0e0,#c5e0c5)';this.remove()"></div>
         <div class="place-info">
@@ -513,7 +527,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="maruaki.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida beef yakiniku" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5b0,#e0b888)';this.remove()"></div>
         <div class="place-info">
@@ -527,7 +540,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e0d0a8;overflow:hidden;padding:0;"><img src="chahanhana.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Fried rice" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d8,#e0d0b0)';this.remove()"></div>
         <div class="place-info">
@@ -541,7 +553,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#e8d8a8;overflow:hidden;padding:0;"><img src="aji-no-yohei.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida beef steak teppanyaki" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd8,#e8d8b0)';this.remove()"></div>
         <div class="place-info">
@@ -555,10 +566,8 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
-
   <!-- ══ ATTRACTIONS ══ -->
   <section id="attractions" class="section-block">
     <div class="section-header">
@@ -567,7 +576,6 @@
       <span class="section-title-jp">観光スポット</span>
     </div>
     <div class="place-grid three">
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d8c898;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/92/TakayamaStreet.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Sanmachi Suji street" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a8)';this.remove()"></div>
         <div class="place-info">
@@ -581,7 +589,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#c8d8a8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Miyagawa_River_from_Miyagawa_Morning_Market_20150123.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Miyagawa Morning Market" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0d8,#c8e0b0)';this.remove()"></div>
         <div class="place-info">
@@ -595,7 +602,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d0c8b0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Hida_Folk_Village,_May_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hida Folk Village" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d0,#d8cdb8)';this.remove()"></div>
         <div class="place-info">
@@ -609,7 +615,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#c0d0e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Shirakawa-go_(2014-06-03).JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shirakawa-go" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0e8f0,#c8d8e8)';this.remove()"></div>
         <div class="place-info">
@@ -623,7 +628,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b8d4b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/KAMIKOCHI_flom_Tashiro_bridge.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Kamikochi" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5ecd5,#b5d8b5)';this.remove()"></div>
         <div class="place-info">
@@ -637,7 +641,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#a8c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Hirayu-otaki-koen01ss3200.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hirayu Waterfall" onerror="this.parentElement.style.background='linear-gradient(135deg,#d0e8f0,#b0d0e8)';this.remove()"></div>
         <div class="place-info">
@@ -651,7 +654,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#c0d8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Shiroyama_park,_Takayama,_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shiroyama Park" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0ecd8,#c5dcc0)';this.remove()"></div>
         <div class="place-info">
@@ -665,7 +667,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d0c8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/20131010_52_Takayama_-_Higashiyama_Walking_Course_(10491222356).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Higashi Teramachi" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d8,#d8d0c0)';this.remove()"></div>
         <div class="place-info">
@@ -679,7 +680,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d8c8d8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Teddy_Bear_Museum_entrance.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Teddy Bear Museum" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede0f0,#d5c0e0)';this.remove()"></div>
         <div class="place-info">
@@ -693,10 +693,8 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
-
   <!-- ══ ONSEN ══ -->
   <section id="onsen" class="section-block">
     <div class="section-header">
@@ -705,7 +703,6 @@
       <span class="section-title-jp">温泉</span>
     </div>
     <div class="place-grid">
-
       <div class="place-card">
         <div class="place-thumb" style="background:#a0c8c8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Tsurunoyu_onsen_rotenburo.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Hirayu Onsen" onerror="this.parentElement.style.background='linear-gradient(135deg,#c8e8e8,#a0d0d0)';this.remove()"></div>
         <div class="place-info">
@@ -719,7 +716,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b8d0b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Takayama_Green_Hotel_%E9%AB%98%E5%B1%B1%E6%A0%BC%E6%9E%97%E6%97%85%E5%BA%97_-_panoramio.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Takayama Green Hotel" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8d8,#b8d8b8)';this.remove()"></div>
         <div class="place-info">
@@ -733,10 +729,8 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
-
   <!-- ══ SKI ══ -->
   <section id="ski" class="section-block">
     <div class="section-header">
@@ -745,7 +739,6 @@
       <span class="section-title-jp">スキー場</span>
     </div>
     <div class="place-grid">
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b8c8e8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Shinhotaka_Ropeway_(2018-06-22).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Shinhotaka Ropeway" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e0f0,#b5c8ec)';this.remove()"></div>
         <div class="place-info">
@@ -759,7 +752,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#bcd0ec;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Hakuba_Iwatake_Snow_Field.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ski snow field winter" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8f5,#b8d0ec)';this.remove()"></div>
         <div class="place-info">
@@ -773,7 +765,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b0c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Prince_Snow_Resort_Sayama.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Ski resort winter slopes" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e5f0,#b0c8e0)';this.remove()"></div>
         <div class="place-info">
@@ -787,10 +778,8 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
-
   <!-- ══ RELAX ══ -->
   <section id="relax" class="section-block">
     <div class="section-header">
@@ -799,7 +788,6 @@
       <span class="section-title-jp">リラクゼーション</span>
     </div>
     <div class="place-grid">
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d8c8e4;overflow:hidden;padding:0;"><img src="relaxationcachetterinka.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Body massage treatment" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede5f5,#d4c8e4)';this.remove()"></div>
         <div class="place-info">
@@ -813,7 +801,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#b8d4e8;overflow:hidden;padding:0;"><img src="hydrospa.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Relaxation spa" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8eef8,#b8d4e8)';this.remove()"></div>
         <div class="place-info">
@@ -827,7 +814,6 @@
           </a>
         </div>
       </div>
-
       <div class="place-card">
         <div class="place-thumb" style="background:#d4cce4;overflow:hidden;padding:0;"><img src="luckderelaxation.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Body massage relaxation" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede8f5,#d4cce4)';this.remove()"></div>
         <div class="place-info">
@@ -841,10 +827,8 @@
           </a>
         </div>
       </div>
-
     </div>
   </section>
-
   <!-- ══ SHOPS ══ -->
   <section id="shops" class="section-block">
     <div class="section-header">
@@ -853,7 +837,6 @@
       <span class="section-title-jp">スーパー・コンビニ</span>
     </div>
     <div class="shop-grid">
-
       <a href="https://maps.app.goo.gl/G25LTyn5UXZ6UrR48" target="_blank" class="shop-card">
         <div class="shop-left">
           <div class="shop-icon">🏪</div>
@@ -864,7 +847,6 @@
         </div>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
       <a href="https://maps.app.goo.gl/NuwcW7okTTpnpD7n8" target="_blank" class="shop-card">
         <div class="shop-left">
           <div class="shop-icon">🛒</div>
@@ -875,7 +857,6 @@
         </div>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
       <a href="https://maps.app.goo.gl/7u1CRJZW7kae3nEC8" target="_blank" class="shop-card">
         <div class="shop-left">
           <div class="shop-icon">🏪</div>
@@ -886,18 +867,15 @@
         </div>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-
     </div>
   </section>
-
 </main>
-
 <div class="guide-footer">
   <a href="index.html">← Return to Guest Manual</a>
   <span style="margin:0 12px;color:var(--border);">|</span>
 </div>
-
 <script>
+  /* ── section nav highlight ── */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.section-nav a');
   function updateNav() {
@@ -907,6 +885,37 @@
   }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
+
+  /* ── uniform cards: inject "More / Less" toggle, shown only when text overflows ── */
+  document.querySelectorAll('.place-card').forEach(card => {
+    const info = card.querySelector('.place-info');
+    const desc = card.querySelector('.place-desc');
+    const map  = card.querySelector('.map-btn');
+    if (!info || !desc) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'more-btn';
+    btn.textContent = 'More ▾';
+    if (map) info.insertBefore(btn, map); else info.appendChild(btn);
+    btn.addEventListener('click', () => {
+      const open = card.classList.toggle('expanded');
+      btn.textContent = open ? 'Less ▴' : 'More ▾';
+      if (!open) desc.scrollTop = 0;
+    });
+  });
+
+  /* mark cards whose description is clamped (so "More" appears only when needed) */
+  function checkClamp() {
+    document.querySelectorAll('.place-card').forEach(card => {
+      if (card.classList.contains('expanded')) return;
+      const desc = card.querySelector('.place-desc');
+      if (!desc) return;
+      card.classList.toggle('has-more', desc.scrollHeight > desc.clientHeight + 2);
+    });
+  }
+  window.addEventListener('load', checkClamp);
+  window.addEventListener('resize', checkClamp);
+  checkClamp();
 </script>
 </body>
 </html>
