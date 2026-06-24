@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="robots" content="noindex" />
+  <title>周辺ガイド — 旅館一の松</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:#1a1612; --sand:#f5f0e8; --cream:#faf7f2; --rust:#8b4a2f;
+      --gold:#b8965a; --muted:#7a6e62; --border:rgba(139,74,47,0.18);
+      --card-bg:rgba(255,253,248,0.97); --shadow:0 2px 20px rgba(26,22,18,0.07);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:15px;scroll-behavior:smooth}
+    body{background-color:var(--cream);color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.7;background-image:url("ichinomatsu.png");background-size:cover;background-position:center top;background-attachment:fixed;background-repeat:no-repeat}
+    a{color:inherit;text-decoration:none}
+    .back-bar{background:var(--ink);padding:10px 20px}
+    .back-bar a{color:rgba(255,255,255,0.65);font-size:0.7rem;letter-spacing:0.16em;display:inline-flex;align-items:center;gap:7px;transition:color 0.2s}
+    .back-bar a:hover{color:#e8c98a}
+    #cat-grid{min-height:calc(100vh - 44px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 18px 48px}
+    #cat-grid.hidden{display:none!important}
+    .cat-grid-header{text-align:center;margin-bottom:32px}
+    .cat-grid-title{font-family:'Noto Sans JP',sans-serif;font-size:1.4rem;font-weight:400;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,0.55);letter-spacing:0.12em;margin-bottom:4px}
+    .cat-grid-sub{font-size:0.75rem;letter-spacing:0.18em;color:rgba(255,255,255,0.7);text-shadow:0 1px 6px rgba(0,0,0,0.45)}
+    .cat-grid-divider{width:48px;height:1px;background:var(--gold);margin:14px auto 0;opacity:0.7}
+    .cat-grid-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;max-width:640px;width:100%}
+    @media(max-width:400px){.cat-grid-inner{grid-template-columns:repeat(2,1fr)}}
+    .cat-tile{background:rgba(255,253,248,0.90);border:1px solid rgba(184,150,90,0.22);border-radius:12px;padding:22px 12px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s,background 0.18s;box-shadow:0 4px 22px rgba(26,22,18,0.12);-webkit-tap-highlight-color:transparent;user-select:none;min-height:80px}
+    .cat-tile:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(26,22,18,0.18);background:rgba(255,253,248,0.99)}
+    .cat-tile:active{transform:scale(0.97)}
+    .cat-tile-label{font-size:0.88rem;font-weight:400;color:var(--ink);letter-spacing:0.06em;text-align:center;line-height:1.3}
+    #cat-view{display:none}
+    .cat-back-bar{background:rgba(250,247,242,0.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:10px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+    .cat-back-btn{background:none;border:none;cursor:pointer;color:var(--rust);font-size:0.75rem;letter-spacing:0.1em;display:inline-flex;align-items:center;gap:6px;padding:0;font-family:'Noto Sans JP',sans-serif;font-weight:300;transition:color 0.2s}
+    .cat-back-btn:hover{color:var(--ink)}
+    .guide-main{max-width:800px;margin:0 auto;padding:36px 14px 64px}
+    .section-block{margin-bottom:52px}
+    .section-block.hidden{display:none!important}
+    .section-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+    .section-title{font-family:'Noto Sans JP',sans-serif;font-size:1.1rem;font-weight:400;color:var(--rust);letter-spacing:0.12em}
+    .place-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+    @media(min-width:560px){.place-grid.three{grid-template-columns:repeat(3,1fr)}}
+    .place-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform 0.2s,box-shadow 0.2s}
+    .place-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,22,18,0.11)}
+    .place-thumb{height:90px;flex-shrink:0;overflow:hidden}
+    .place-info{padding:11px 13px 13px;flex:1;display:flex;flex-direction:column;gap:5px}
+    .place-badges{display:flex;flex-wrap:wrap;gap:3px}
+    .badge{font-size:0.6rem;letter-spacing:0.04em;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
+    .b-must{background:#8b4a2f1a;color:#8b4a2f} .b-local{background:#b8965a1a;color:#9a7a3a}
+    .b-family{background:#4a7a501a;color:#3a6640} .b-budget{background:#4a6a8a1a;color:#3a5570}
+    .b-beef{background:#7a1a1a1a;color:#7a2020} .b-onsen{background:#1a7a701a;color:#1a6660}
+    .b-winter{background:#2a4a8a1a;color:#1e3d7a} .b-nature{background:#3a6a1a1a;color:#3a5a18}
+    .b-culture{background:#5a2a8a1a;color:#4a2070} .b-unesco{background:#b8965a22;color:#8a6a30;border:1px solid #b8965a44}
+    .b-spa{background:#2a6a7a1a;color:#1e5a66} .b-ramen{background:#8a5a201a;color:#7a4a18}
+    .place-name{font-size:0.87rem;font-weight:500;color:var(--ink);line-height:1.25}
+    .place-desc{font-size:0.75rem;color:var(--muted);line-height:1.65;flex:1}
+    .map-btn{display:inline-flex;align-items:center;gap:4px;margin-top:7px;font-size:0.68rem;letter-spacing:0.06em;color:var(--rust);border:1px solid var(--border);border-radius:20px;padding:4px 10px;align-self:flex-start;transition:all 0.18s}
+    .map-btn:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+    .map-btn svg{width:9px;height:9px}
+    .shop-grid{display:flex;flex-direction:column;gap:9px}
+    .shop-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background 0.18s}
+    .shop-card:hover{background:var(--sand)}
+    .shop-name{font-size:0.88rem;font-weight:400} .shop-sub{font-size:0.75rem;color:var(--muted)}
+    .guide-footer{text-align:center;padding:22px 20px 40px;border-top:1px solid var(--border);background:rgba(250,247,242,0.85)}
+    .guide-footer a{font-size:0.74rem;letter-spacing:0.12em;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:2px;transition:color 0.2s}
+    .guide-footer a:hover{color:var(--rust)}
+    @media(max-width:340px){.place-grid,.place-grid.three{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="index.html">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    ゲストマニュアルへ戻る
+  </a>
+</div>
+
+<div id="cat-grid">
+  <div class="cat-grid-header">
+    <p class="cat-grid-title">周辺ガイド</p>
+    <p class="cat-grid-sub">一の松周辺のおすすめスポット</p>
+    <div class="cat-grid-divider"></div>
+  </div>
+  <div class="cat-grid-inner">
+    <div class="cat-tile" onclick="showSection('restaurants')"><div class="cat-tile-label">レストラン</div></div>
+    <div class="cat-tile" onclick="showSection('attractions')"><div class="cat-tile-label">観光</div></div>
+    <div class="cat-tile" onclick="showSection('onsen')"><div class="cat-tile-label">温泉</div></div>
+    <div class="cat-tile" onclick="showSection('ski')"><div class="cat-tile-label">スキー</div></div>
+    <div class="cat-tile" onclick="showSection('relax')"><div class="cat-tile-label">リラクゼーション</div></div>
+    <div class="cat-tile" onclick="showSection('shops')"><div class="cat-tile-label">ショップ</div></div>
+  </div>
+</div>
+
+<div id="cat-view">
+  <div class="cat-back-bar">
+    <button class="cat-back-btn" onclick="showGrid()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      カテゴリー一覧
+    </button>
+  </div>
+  <main class="guide-main">
+
+    <section id="restaurants" class="section-block hidden">
+      <div class="section-header"><span class="section-title">レストラン・飲食店</span></div>
+      <div class="place-grid three">
+        <div class="place-card"><div class="place-thumb" style="background:#e0c4a0;overflow:hidden;padding:0;"><img src="suzuya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5bc,#e0b898)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span><span class="badge b-must">必見</span></div><p class="place-name">すゞや</p><p class="place-desc">朴葉味噌ステーキが名物。飛騨牛をすき焼きや炭火焼きで楽しめる民芸調の名店。予約不可のため行列必至。</p><a href="https://maps.app.goo.gl/Fdf9eVAY8Y4d7T2L8" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="ajikura.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d0b5,#e0b090)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span></div><p class="place-name">味蔵天国</p><p class="place-desc">飛騨農業協同組合直営の飛騨牛焼肉・すき焼き店。産地直送で品質保証。整理券制のため早めに到着を。火曜定休。高山駅から徒歩1分。</p><a href="https://maps.app.goo.gl/kf7UNp6uByRf9vHV9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d8e8b8;overflow:hidden;padding:0;"><img src="houshou.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8f0d5,#d0e0b0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">三心庵豊昇</p><p class="place-desc">旬の地元食材を使った和定食が評判。地元の方々に長く愛される一軒です。</p><a href="https://maps.app.goo.gl/B1TdT7fHW6e6juLb7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#b8d4e8;overflow:hidden;padding:0;"><img src="maruiya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8eef8,#b8d4e8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-local">海鮮</span><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">まるい家 飛騨高山本店</p><p class="place-desc">鮮魚の卸問屋・シーフードマルイが直営。刺身・寿司・天ぷら・煮物に加え、テーブルで楽しむ磯焼き（無煙ロースター）が人気。飛騨牛すき焼きも◎。英・中語メニューあり。</p><a href="https://maps.app.goo.gl/b7vGgE6Ldh8Wavot7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d4c8e8;overflow:hidden;padding:0;"><img src="lemidi.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0f0,#d4c8e8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span><span class="badge b-local">フレンチ</span></div><p class="place-name">ル・ミディ</p><p class="place-desc">飛騨牛のハンバーグステーキや本格ステーキが楽しめるフレンチレストラン。高山中心部での上質なウエスタンダイニング。</p><a href="https://maps.app.goo.gl/2gGB8qUh1WQQEXYv7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e8e0b0;overflow:hidden;padding:0;"><img src="tensho.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0f0d8,#e0e0b8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-local">和食</span><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">天昇</p><p class="place-desc">伝統的な雰囲気の中で本格的な和食が楽しめ、地元の常連客から観光客まで幅広く支持されています。</p><a href="https://maps.app.goo.gl/7eXuoKob4WMeimKZ9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#c8dcc0;overflow:hidden;padding:0;"><img src="ebisusoba.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0e0,#c8e0c0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-ramen">そば</span><span class="badge b-budget">お手頃</span></div><p class="place-name">恵比寿そば</p><p class="place-desc">創業明治31年（1898年）125年以上続く手打ちそばの老舗。七割そばと秘伝のだしが自慢。町家の趣ある空間で英語・スペイン語メニューあり。</p><a href="https://maps.app.goo.gl/gwRYs4fh9qn8skg36" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0d0a0;overflow:hidden;padding:0;"><img src="jingorohramen.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a5)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-ramen">ラーメン</span><span class="badge b-budget">お手頃</span></div><p class="place-name">甚五郎ラーメン</p><p class="place-desc">醤油と豚骨のあっさりスープに細ちぢれ麺が絡む高山ラーメンの定番店。チャーシューと生姜の漬物が名物。</p><a href="https://maps.app.goo.gl/GCFPyTAzdRtZz7zFA" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0c898;overflow:hidden;padding:0;"><img src="menyariki.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e0c5,#e0c8a0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-ramen">ラーメン</span><span class="badge b-local">人気</span></div><p class="place-name">麺屋力</p><p class="place-desc">高山ラーメンとは一線を画す、濃厚な煮干しスープが特徴。つけ麺や牛料理も人気。ピーク時は行列必至。</p><a href="https://maps.app.goo.gl/DHVhykBmq6QRTG4e9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0c098;overflow:hidden;padding:0;"><img src="karubitaisho.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d8c5,#e0c0a0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-local">焼肉</span><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">カルビ大将</p><p class="place-desc">カルビや内臓系が充実したカジュアル焼肉チェーン。食べ放題コースあり。グループでの夕食に最適。</p><a href="https://maps.app.goo.gl/WrGX5jPr88yvDDfaA" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e8d8a0;overflow:hidden;padding:0;"><img src="katsuan.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd0,#e8d8a8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-budget">お手頃</span><span class="badge b-local">人気</span></div><p class="place-name">勝庵41 高山店</p><p class="place-desc">リーズナブルなとんかつ定食が充実。ボリューム満点でコストパフォーマンスも抜群です。</p><a href="https://maps.app.goo.gl/uKZtmGmXFMMrtDzW8" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#c8e0c0;overflow:hidden;padding:0;"><img src="megumiya.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0f0e0,#c5e0c5)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span><span class="badge b-local">ステーキ</span></div><p class="place-name">恵みや</p><p class="place-desc">飛騨牛と日本海の新鮮な海の幸を使った季節料理が楽しめる店。飛騨牛寿司・白海老のから揚げが名物。旧市街から徒歩1〜2分、個室あり。</p><a href="https://maps.app.goo.gl/715xPQK1jSwkEPHB9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0b888;overflow:hidden;padding:0;"><img src="maruaki.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0d5b0,#e0b888)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span><span class="badge b-must">必見</span></div><p class="place-name">丸明</p><p class="place-desc">天満町にある飛騨牛の名店。A5ランクの飛騨和牛を使った焼肉・しゃぶしゃぶ・すき焼きが楽しめます。英語対応スタッフあり。</p><a href="https://maps.app.goo.gl/XKcypqikVAeNTUA37" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e0d0a8;overflow:hidden;padding:0;"><img src="chahanhana.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d8,#e0d0b0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-budget">中華</span><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">チャーハン花</p><p class="place-desc">2017年開業の家族経営の中華料理店。自家製チャーハン（ペッパー・オムレツ）と餃子が絶品。日本一とも評される本格中華。</p><a href="https://maps.app.goo.gl/GM63AE5o8ia3TriU9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#e8d8a8;overflow:hidden;padding:0;"><img src="aji-no-yohei.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5ecd8,#e8d8b0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-beef">飛騨牛</span><span class="badge b-local">旧市街</span></div><p class="place-name">味の与平</p><p class="place-desc">高山の古い町並みにある飛騨牛鉄板焼きレストラン。伝統的な建物の中でA4・A5飛騨和牛の鉄板焼きが楽しめます。</p><a href="https://maps.app.goo.gl/iQTwdVEEX7heF62d8" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+      </div>
+    </section>
+
+    <section id="attractions" class="section-block hidden">
+      <div class="section-header"><span class="section-title">観光スポット</span></div>
+      <div class="place-grid three">
+        <div class="place-card"><div class="place-thumb" style="background:#d8c898;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/92/TakayamaStreet.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#f0e8d0,#e0d0a8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-culture">文化</span></div><p class="place-name">三町筋</p><p class="place-desc">江戸時代の面影が残る高山の旧市街。酒蔵や工芸品店、カフェが軒を連ねる高山随一の散策スポット。</p><a href="https://maps.app.goo.gl/56JceZiFr6C76aZy6" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#c8d8a8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Miyagawa_River_from_Miyagawa_Morning_Market_20150123.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e5f0d8,#c8e0b0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-family">ファミリー</span></div><p class="place-name">宮川朝市</p><p class="place-desc">日本を代表する朝市のひとつ。新鮮な農産物や漬物、工芸品が並び、午前9時前に訪れるのがおすすめ。</p><a href="https://maps.app.goo.gl/Y2dTh2S4tfhAjVFJ6" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d0c8b0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Hida_Folk_Village,_May_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d0,#d8cdb8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-family">ファミリー</span><span class="badge b-culture">文化</span></div><p class="place-name">飛騨の里</p><p class="place-desc">飛騨各地から移築された合掌造りの建物が30棟以上。四季折々に美しく、伝統工芸の実演も楽しめます。</p><a href="https://maps.app.goo.gl/F8oMRSMHnaVnY1kg9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#c0d0e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Shirakawa-go_(2014-06-03).JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0e8f0,#c8d8e8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-unesco">世界遺産</span></div><p class="place-name">白川郷</p><p class="place-desc">合掌造りの集落で知られる世界遺産の村。雪景色は格別で、高山から約1時間でアクセスできます。</p><a href="https://www.google.com/maps/search/白川郷" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#b8d4b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/KAMIKOCHI_flom_Tashiro_bridge.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5ecd5,#b5d8b5)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-nature">自然</span></div><p class="place-name">上高地</p><p class="place-desc">北アルプスに囲まれた清流の渓谷。5月〜11月のみ開放される、手つかずの自然の楽園。</p><a href="https://maps.app.goo.gl/wCwnAwrqoSn7D3Sx8" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#a8c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Hirayu-otaki-koen01ss3200.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d0e8f0,#b0d0e8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-nature">自然</span></div><p class="place-name">平湯大滝</p><p class="place-desc">日本の滝百選に選ばれた高さ64mの名瀑。平湯温泉近くの豊かな森の中に位置し、夏冬ともに見事な景観。</p><a href="https://maps.app.goo.gl/4WP5psT7MQD9T7VW6" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#c0d8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Shiroyama_park,_Takayama,_2017.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e0ecd8,#c5dcc0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-nature">自然</span><span class="badge b-family">無料</span></div><p class="place-name">城山公園</p><p class="place-desc">城跡から高山の旧市街を一望できる公園。春の桜、秋の紅葉が特に美しく、入場無料。</p><a href="https://maps.app.goo.gl/8gBbnXKJAVYoLS8q7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d0c8b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/20131010_52_Takayama_-_Higashiyama_Walking_Course_(10491222356).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#e8e0d8,#d8d0c0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-culture">文化</span><span class="badge b-nature">景観</span></div><p class="place-name">東山寺町</p><p class="place-desc">東山の丘に続く静かな寺町散策路。観光の喧騒を離れ、高山の歴史に静かに触れることができます。</p><a href="https://maps.app.goo.gl/AcXDtsjCSJJgsqsH7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d8c8d8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Teddy_Bear_Museum_entrance.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede0f0,#d5c0e0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-family">ファミリー</span></div><p class="place-name">テディベアエコビレッジ</p><p class="place-desc">テディベアとエコをテーマにしたミュージアム＆ショップ。お子様連れのご家族に人気のスポット。</p><a href="https://maps.app.goo.gl/v2GGkcGzWwqjJunD8" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+      </div>
+    </section>
+
+    <section id="onsen" class="section-block hidden">
+      <div class="section-header"><span class="section-title">温泉</span></div>
+      <div class="place-grid">
+        <div class="place-card"><div class="place-thumb" style="background:#a0c8c8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Tsurunoyu_onsen_rotenburo.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#c8e8e8,#a0d0d0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-onsen">温泉</span></div><p class="place-name">平湯温泉</p><p class="place-desc">飛騨最古の温泉郷のひとつ。乳白色の湯と森に囲まれた露天風呂が魅力。高山から約40分。</p><a href="https://maps.app.goo.gl/tjRTcuwMLgPMYnPY9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#b8d0b8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Takayama_Green_Hotel_%E9%AB%98%E5%B1%B1%E6%A0%BC%E6%9E%97%E6%97%85%E5%BA%97_-_panoramio.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8d8,#b8d8b8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-onsen">温泉</span><span class="badge b-local">市内</span></div><p class="place-name">高山グリーンホテル</p><p class="place-desc">高山市内に位置する人気ホテルの日帰り温泉。山の景色を眺めながら内湯・露天風呂が楽しめます。</p><a href="https://maps.app.goo.gl/qeUqgv3bnfVWTe3u6" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+      </div>
+    </section>
+
+    <section id="ski" class="section-block hidden">
+      <div class="section-header"><span class="section-title">スキー場</span></div>
+      <div class="place-grid">
+        <div class="place-card"><div class="place-thumb" style="background:#b8c8e8;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Shinhotaka_Ropeway_(2018-06-22).jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e0f0,#b5c8ec)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-must">必見</span><span class="badge b-winter">冬季</span></div><p class="place-name">新穂高ロープウェイ</p><p class="place-desc">日本唯一の2階建てロープウェイがある名リゾート。北アルプスの絶景が楽しめます。高山から約1時間。</p><a href="https://maps.app.goo.gl/XB4WZ8LwvBf1hw498" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#bcd0ec;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Hakuba_Iwatake_Snow_Field.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8e8f5,#b8d0ec)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-winter">冬季</span><span class="badge b-family">ファミリー</span></div><p class="place-name">ほうのき平スキー場</p><p class="place-desc">緩やかなコースが充実したファミリー向けスキー場。初心者やお子様連れの方に最適です。</p><a href="https://maps.app.goo.gl/xgox6cFXvsqgB1f66" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#b0c8e0;overflow:hidden;padding:0;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Prince_Snow_Resort_Sayama.JPG" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d5e5f0,#b0c8e0)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-winter">冬季</span><span class="badge b-onsen">温泉</span></div><p class="place-name">平湯の森スキー場</p><p class="place-desc">スキーと温泉の両方が楽しめるリゾート。滑った後に天然温泉で疲れを癒す、冬の完璧な一日。</p><a href="https://www.google.com/maps/search/平湯の森スキー場" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+      </div>
+    </section>
+
+    <section id="relax" class="section-block hidden">
+      <div class="section-header"><span class="section-title">リラクゼーション</span></div>
+      <div class="place-grid">
+        <div class="place-card"><div class="place-thumb" style="background:#d8c8e4;overflow:hidden;padding:0;"><img src="relaxationcachetterinka.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede5f5,#d4c8e4)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-spa">マッサージ</span><span class="badge b-local">地元のおすすめ</span></div><p class="place-name">カシェット琳花</p><p class="place-desc">落ち着いた雰囲気の中で本格的なボディケアとマッサージが受けられると評判のサロン。</p><a href="https://maps.app.goo.gl/qiTxqsvfnExrfVxh6" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#b8d4e8;overflow:hidden;padding:0;"><img src="hydrospa.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#d8eef8,#b8d4e8)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-spa">スパ</span></div><p class="place-name">ドライヘッドスパ＆ボディケアサロン</p><p class="place-desc">水を使わないドライヘッドスパとボディケアの専門サロン。疲れた目や頭皮をほぐすヘッドスパが人気。観光疲れに最適。</p><a href="https://maps.app.goo.gl/s8G85kmu3uPr8THX9" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+        <div class="place-card"><div class="place-thumb" style="background:#d4cce4;overflow:hidden;padding:0;"><img src="luckderelaxation.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#ede8f5,#d4cce4)';this.remove()"></div><div class="place-info"><div class="place-badges"><span class="badge b-spa">マッサージ</span></div><p class="place-name">楽リラクゼーション惣助店 2F</p><p class="place-desc">2階にあるリラクゼーションサロン。マッサージやボディケアで旅の疲れをしっかり癒してください。</p><a href="https://maps.app.goo.gl/LrHUSxM1J5UtBHLH7" target="_blank" class="map-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>地図</a></div></div>
+      </div>
+    </section>
+
+    <section id="shops" class="section-block hidden">
+      <div class="section-header"><span class="section-title">スーパー・コンビニ</span></div>
+      <div class="shop-grid">
+        <a href="https://maps.app.goo.gl/G25LTyn5UXZ6UrR48" target="_blank" class="shop-card"><div><p class="shop-name">スーパー</p><p class="shop-sub">旅館から最も近いスーパー</p></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="https://maps.app.goo.gl/NuwcW7okTTpnpD7n8" target="_blank" class="shop-card"><div><p class="shop-name">スーパー · Asumo</p><p class="shop-sub">青果・デリ・日用品が揃うスーパー</p></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="https://maps.app.goo.gl/7u1CRJZW7kae3nEC8" target="_blank" class="shop-card"><div><p class="shop-name">コンビニ</p><p class="shop-sub">夜遅くまで営業 — お菓子・飲み物・日用品</p></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8965a" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="guide-footer">
+  <a href="index.html">← ゲストマニュアルへ戻る</a>
+  <span style="margin:0 12px;color:var(--border);">|</span>
+  <a href="tel:080-3019-8118">スタッフに連絡 &nbsp; 080-3019-8118</a>
+</div>
+
+<script>
+  function showSection(id) {
+    document.getElementById('cat-grid').classList.add('hidden');
+    document.getElementById('cat-view').style.display = 'block';
+    document.querySelectorAll('.section-block').forEach(function(s){s.classList.add('hidden');});
+    var t = document.getElementById(id); if(t) t.classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+  function showGrid() {
+    document.getElementById('cat-view').style.display = 'none';
+    document.getElementById('cat-grid').classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+</script>
+</body>
+</html>
